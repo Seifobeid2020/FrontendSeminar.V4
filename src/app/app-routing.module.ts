@@ -13,7 +13,7 @@ const appRoutes: Routes = [
 
   {
     path: '',
-    canActivate: [OktaAuthGuard],
+    // canActivate: [OktaAuthGuard],
     loadChildren: () =>
       import('./components/layout.module').then((m) => m.LayoutModule),
   },

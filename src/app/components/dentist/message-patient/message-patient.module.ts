@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RadiologistRoutingModule } from './radiologist-routing.module';
-import { ReportsComponent } from './reports/reports.component';
-import { ExpenseComponent } from './expense/expense.component';
-import { TreatmentTypeComponent } from './treatment-type/treatment-type.component';
-import { ExpenseTypeComponent } from './expense-type/expense-type.component';
+
+import { FormsModule } from '@angular/forms';
 
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
@@ -23,58 +19,54 @@ import { RatingModule } from 'primeng/rating';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService, SharedModule } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { FormsModule } from '@angular/forms';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
-import { MenubarModule } from 'primeng/menubar';
-import { PanelMenuModule } from 'primeng/panelmenu';
-import { RadiologistComponent } from './radiologist.component';
+import { MessagePatientsRoutingModule } from './message-patients-routing.module';
+import { SharedModule } from 'src/shared/shared.module';
+import { RouterModule } from '@angular/router';
+import { MessagePatientComponent } from './message-patient.component';
+import { MessagePatientTableComponent } from './message-patient-table/message-patient-table.component';
+import { MessagePatientDetailsComponent } from './message-patient-details/message-patient-details.component';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @NgModule({
   declarations: [
-    ReportsComponent,
-    ExpenseComponent,
-    TreatmentTypeComponent,
-    ExpenseTypeComponent,
-    RadiologistComponent
+    MessagePatientComponent,
+    MessagePatientTableComponent,
+    MessagePatientDetailsComponent,
   ],
   imports: [
-    CommonModule,
-    RadiologistRoutingModule,
-    FormsModule,
-    //table
     TableModule,
-    ToastModule,
     CalendarModule,
     SliderModule,
+    DialogModule,
     MultiSelectModule,
     ContextMenuModule,
-    DialogModule,
-    ButtonModule,
     DropdownModule,
-    ProgressBarModule,
+    ButtonModule,
+    ToastModule,
     InputTextModule,
+    ProgressBarModule,
     FileUploadModule,
     ToolbarModule,
     RatingModule,
+    FormsModule,
     RadioButtonModule,
     InputNumberModule,
     ConfirmDialogModule,
     InputTextareaModule,
     SelectButtonModule,
-    //lay out
-    CommonModule,
-    RadiologistRoutingModule,
-    MenubarModule,
-    InputTextModule,
-    ButtonModule,
-    PanelMenuModule,
+    MessagePatientsRoutingModule,
     SharedModule,
+    RouterModule,
+    ProgressSpinnerModule,
+    FieldsetModule,
   ],
-  exports: [],
+
   providers: [MessageService, ConfirmationService],
 })
-export class RadiologistModule {}
+export class PatientModule {}

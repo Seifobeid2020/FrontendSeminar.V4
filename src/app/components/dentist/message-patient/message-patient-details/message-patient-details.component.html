@@ -1,0 +1,90 @@
+<div id="hide">
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+</div>
+
+<div class="p-grid">
+  <div class="p-col-9">
+    <div class="p-grid p-jc-between">
+      <div class="p-col-4 p-as-center">
+        ​<a [href]="messagePatientDetails.imageUrl">
+          <img
+            [src]="messagePatientDetails.imageUrl"
+            [alt]="messagePatientDetails.imageUrl"
+            width="300"
+          />
+        </a>
+      </div>
+      <div class="p-col-4 p-as-center">
+        <div class="p-grid">
+          <div class="p-col-6 p-offset-3">
+            <div class="box">
+              <button
+                pButton
+                pRipple
+                label=" Send to AI ->"
+                class="p-button-success p-mr-2"
+                (click)="sendToAIConverter()"
+              ></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-col-4 p-as-center">
+        <div class="p-grid">
+          <div class="p-col-6 p-offset-3">
+            <div class="box">
+              <p-progressSpinner
+                *ngIf="imageAI || imageAIReceived"
+              ></p-progressSpinner>
+            </div>
+          </div>
+        </div>
+
+        ​<a
+          [href]="messagePatientDetails.imageUrl"
+          *ngIf="!imageAI && !imageAIReceived"
+        >
+          <img
+            src="{{ messagePatientDetails.imageUrl }}"
+            alt="A image"
+            width="300"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="p-col-3">
+    <p-fieldset legend="About">
+      <div class="p-d-flex p-flex-column">
+        <div class="p-mb-1">
+          <h5>Image Type</h5>
+          {{ messagePatientDetails.imageType }}
+        </div>
+        <div class="p-mb-1">
+          <h5>Message Id</h5>
+          {{ messagePatientDetails.messageId }}
+        </div>
+        <div class="p-mb-1">
+          <h5>Patient Name</h5>
+          {{ messagePatientDetails.patientName }}
+        </div>
+        <div class="p-mb-1">
+          <h5>Patient Phone Number</h5>
+          {{ messagePatientDetails.patientPhoneNumber }}
+        </div>
+        <div class="p-mb-1">
+          <h5>Sender Id</h5>
+          {{ messagePatientDetails.senderId }}
+        </div>
+        <div class="p-mb-1">
+          <h5>Sent At</h5>
+          {{ messagePatientDetails.sentAt }}
+        </div>
+        <div class="p-mb-1">
+          <h5>Treatment Id</h5>
+          {{ messagePatientDetails.treatmentId }}
+        </div>
+      </div>
+    </p-fieldset>
+  </div>
+</div>

@@ -1,0 +1,170 @@
+<p-toast></p-toast>
+<div class="card">
+  <p-toolbar styleClass="p-mb-4">
+    <!-- Delete and Add all Buttons -->
+    <ng-template pTemplate="left">
+      <button
+        pButton
+        pRipple
+        label="New"
+        icon="pi pi-plus"
+        class="p-button-success p-mr-2"
+        (click)="openNew()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        [label]="'Delete'"
+        icon="pi pi-trash"
+        class="p-button-danger"
+        (click)="deleteSelectedPatients()"
+        [disabled]="!selectedPatients || !selectedPatients.length"
+      ></button>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <!-- <p-fileUpload
+        mode="basic"
+        accept="image/*"
+        [maxFileSize]="1000000"
+        label="Import"
+        chooseLabel="Import"
+        class="p-mr-2 p-d-inline-block"
+      ></p-fileUpload> -->
+      <button
+        pButton
+        pRipple
+        label="XSL"
+        icon="pi pi-download"
+        class="p-button-help"
+        (click)="exportExcel()"
+        class="p-button-success p-mr-2"
+        pTooltip="XLS"
+        tooltipPosition="bottom"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="messagePatients"
+    [rows]="10"
+    [paginator]="true"
+    [globalFilterFields]="['firstName', 'lastName']"
+    [(selection)]="selectedPatients"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+    sortMode="multiple"
+  >
+    <!-- ############################
+  #################Caption /search##############
+
+  -->
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h5 class="p-text-bold">Patients</h5>
+
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            #i
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+            placeholder="Search..."
+          />
+        </span>
+      </div>
+    </ng-template>
+
+    <!-- ############################
+  ################# table header ##############
+
+  -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="senderId">
+          Sender Id <p-sortIcon field="senderId"></p-sortIcon>
+        </th>
+        <th pSortableColumn="imageType">
+          Image Type <p-sortIcon field="imageType"></p-sortIcon>
+        </th>
+        <th pSortableColumn="treatmentId">
+          Treatment Id <p-sortIcon field="treatmentId"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="patientName">
+          Patient Name <p-sortIcon field="patientName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="sentAt">
+          sent At <p-sortIcon field="sentAt"></p-sortIcon>
+        </th>
+        <th pSortableColumn="patientPhoneNumber">
+          Patient Phone Number
+          <p-sortIcon field="patientPhoneNumber"></p-sortIcon>
+        </th>
+
+        <th></th>
+      </tr>
+    </ng-template>
+
+    <!-- ############################
+  ################# Tables body ##############
+  -->
+    <ng-template pTemplate="body" let-messagePatient>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="messagePatient"></p-tableCheckbox>
+        </td>
+        <td>{{ messagePatient.senderId }}</td>
+
+        <td>{{ messagePatient.imageType }}</td>
+        <td>{{ messagePatient.treatmentId }}</td>
+        <td>{{ messagePatient.patientName }}</td>
+        <td>{{ messagePatient.sentAt | date: "yyyy-MM-dd" }}</td>
+        <td>
+          {{ messagePatient.patientPhoneNumber }}
+        </td>
+
+        <td>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-search-plus"
+            class="p-button-rounded p-button-prime p-mr-2"
+            [routerLink]="['/dentist/patients', messagePatient.messageId]"
+          ></button>
+          <!-- [routerLink]="['/recipes', id, 'edit']" -->
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-success p-mr-2"
+            (click)="editPatient(messagePatient)"
+          ></button>
+
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger"
+            (click)="deletePatient(messagePatient)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        In total there are
+        {{ messagePatients ? messagePatients.length : 0 }} patients.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog> -->

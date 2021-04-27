@@ -1,17 +1,18 @@
+import { Report } from './report.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Customer } from './customer';
 
 @Injectable({ providedIn: 'root' })
-export class CustomerService {
+export class ReportService {
+  baseUrl = 'https://localhost:5001/';
   constructor(private http: HttpClient) {}
 
-  getCustomersLarge() {
+  getReports() {
     return this.http
-      .get<any>('assets/customers-large.json')
+      .get<Report[]>(this.baseUrl + 'api/report')
       .toPromise()
-      .then((res) => <Customer[]>res.data)
       .then((data) => {
+        console.log(data);
         return data;
       });
   }

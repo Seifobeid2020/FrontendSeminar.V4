@@ -5,34 +5,46 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ExpenseTypeComponent } from './expense-type/expense-type.component';
+import { RadiologistComponent } from './radiologist.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: DashboardComponent,
-  },
 
   {
-    path: 'patients',
-    loadChildren: () =>
-      import('./patient/patient.module').then((m) => m.PatientModule),
+    path: '',
+    component: RadiologistComponent,
+    children: [
+      {
+        path: '',
+        component: DashboardComponent,
+      },
+
+      {
+        path: 'patients',
+        loadChildren: () =>
+          import('./patient/patient.module').then((m) => m.PatientModule),
+      },
+      {
+        path: 'reports',
+        component: ReportsComponent,
+      },
+      {
+        path: 'expenses',
+        component: ExpenseComponent,
+      },
+      {
+        path: 'expense-type',
+        component: ExpenseTypeComponent,
+      },
+      {
+        path: 'treatment-type',
+        component: TreatmentTypeComponent,
+      },
+    ],
   },
-  {
-    path: 'reports',
-    component: ReportsComponent,
-  },
-  {
-    path: 'expenses',
-    component: ExpenseComponent,
-  },
-  {
-    path: 'expense-type',
-    component: ExpenseTypeComponent,
-  },
-  {
-    path: 'treatment-type',
-    component: TreatmentTypeComponent,
-  },
+
+
+
+
   //{ path: 'path/:routeParam', component: MyComponent },
   //{ path: 'staticPath', component: ... },
   //{ path: '**', component: ... },

@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    canActivate: [OktaAuthGuard],
+    // canActivate: [OktaAuthGuard],
     children: [
       {
         path: 'radiologist',
