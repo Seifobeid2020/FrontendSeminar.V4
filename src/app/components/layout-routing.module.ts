@@ -5,14 +5,15 @@ import { LayoutComponent } from './layout.component';
 import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
-import { OktaAuthGuard } from '@okta/okta-angular';
+// import { OktaAuthGuard } from '@okta/okta-angular';
 
 const routes: Routes = [
   {
     path: '',
-    component: LayoutComponent,
+    // component: LayoutComponent,
     // canActivate: [OktaAuthGuard],
     children: [
+      { path: '', redirectTo: 'radiologist', pathMatch: 'full' },
       {
         path: 'radiologist',
         loadChildren: () =>

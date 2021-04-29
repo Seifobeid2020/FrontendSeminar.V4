@@ -1,4 +1,4 @@
-import { OktaAuthService } from '@okta/okta-angular';
+// import { OktaAuthService } from '@okta/okta-angular';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./patient.component.css'],
 })
 export class PatientComponent implements OnInit {
-  constructor(private authService: OktaAuthService) {}
+  // constructor(private authService: OktaAuthService) {}
+  constructor() {}
 
   ngOnInit(): void {}
 
-  logout() {
-    this.authService.signOut();
-  }
+  // logout() {
+  //   this.authService.signOut();
+  // }
 }

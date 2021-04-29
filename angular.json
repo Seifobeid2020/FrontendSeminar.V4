@@ -33,7 +33,8 @@
             ],
             "scripts": [
               "node_modules/animejs/anime.min.js",
-              "node_modules/scrollreveal/dist/scrollreveal.min.js"
+              "node_modules/scrollreveal/dist/scrollreveal.min.js",
+              "node_modules/chart.js/dist/Chart.js"
             ]
           },
           "configurations": {

@@ -137,23 +137,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   isAuthenticated: boolean;
 
-  constructor(public oktaAuth: OktaAuthService) {
+  constructor() {
     // subscribe to authentication state changes
-    this.oktaAuth.$authenticationState.subscribe(
-      (isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated)
-    );
   }
 
   ngOnInit() {}
 
-  login() {
-    this.oktaAuth.signInWithRedirect({
-      originalUri: '/dash/patients',
-    });
-  }
-  logout() {
-    this.oktaAuth.signOut();
-  }
+  login() {}
+  logout() {}
 
   ngAfterViewInit() {
     init(this.body, this.path, this.circle);

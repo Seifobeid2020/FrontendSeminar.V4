@@ -8,7 +8,6 @@
       (click)="logout()"
     ></button>
   </ng-template>
-
 </p-menubar>
 
 <div class="sidenav">
@@ -18,8 +17,10 @@
   ></p-panelMenu>
 </div>
 
-<div class="main">
-  <div class="p-shadow-5 container">
+<div class="content-wrapper">
+  <!-- <div class="p-shadow-5 container"> -->
+  <div class="container-fluid">
     <router-outlet></router-outlet>
   </div>
+  <!-- </div> -->
 </div>

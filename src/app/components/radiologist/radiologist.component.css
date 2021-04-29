@@ -11,14 +11,20 @@
   position: absolute;
   left: 200px;
 }
-
+/*
 .container {
   margin: 0 1.5em;
 
   margin-top: 20px;
   padding: 2em;
   position: relative;
-}
+
+  background: #f1f1f1;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  color: #636363;
+  letter-spacing: 1px;
+} */
 
 .sidenav {
   background-color: white;
@@ -66,3 +72,22 @@
 ::ng-deep p-menubarsub {
   float: right;
 } */
+.content-wrapper {
+  margin-left: 200px;
+  /* padding-top: 2px; */
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 70px;
+  overflow-x: hidden;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}

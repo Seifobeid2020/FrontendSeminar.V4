@@ -6,7 +6,6 @@ import { ExpenseComponent } from './expense/expense.component';
 import { TreatmentTypeComponent } from './treatment-type/treatment-type.component';
 import { ExpenseTypeComponent } from './expense-type/expense-type.component';
 
-import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { CalendarModule } from 'primeng/calendar';
 import { SliderModule } from 'primeng/slider';
@@ -28,10 +27,16 @@ import { MessageService } from 'primeng/api';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
 
 import { MenubarModule } from 'primeng/menubar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { RadiologistComponent } from './radiologist.component';
+import { AdvanceReportComponent } from './reports/advance-report/advance-report.component';
+
+//table dashboard
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [
@@ -39,14 +44,16 @@ import { RadiologistComponent } from './radiologist.component';
     ExpenseComponent,
     TreatmentTypeComponent,
     ExpenseTypeComponent,
-    RadiologistComponent
+    RadiologistComponent,
+    AdvanceReportComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
     RadiologistRoutingModule,
     FormsModule,
     //table
-    TableModule,
+    ChartModule,
     ToastModule,
     CalendarModule,
     SliderModule,
@@ -65,6 +72,7 @@ import { RadiologistComponent } from './radiologist.component';
     ConfirmDialogModule,
     InputTextareaModule,
     SelectButtonModule,
+    TableModule,
     //lay out
     CommonModule,
     RadiologistRoutingModule,

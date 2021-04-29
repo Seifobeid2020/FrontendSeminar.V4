@@ -6,9 +6,9 @@ import { NgModule } from '@angular/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ExpenseTypeComponent } from './expense-type/expense-type.component';
 import { RadiologistComponent } from './radiologist.component';
+import { AdvanceReportComponent } from './reports/advance-report/advance-report.component';
 
 const routes: Routes = [
-
   {
     path: '',
     component: RadiologistComponent,
@@ -25,7 +25,10 @@ const routes: Routes = [
       },
       {
         path: 'reports',
-        component: ReportsComponent,
+        children: [
+          { path: '', component: ReportsComponent },
+          { path: 'advance', component: AdvanceReportComponent },
+        ],
       },
       {
         path: 'expenses',
@@ -41,9 +44,6 @@ const routes: Routes = [
       },
     ],
   },
-
-
-
 
   //{ path: 'path/:routeParam', component: MyComponent },
   //{ path: 'staticPath', component: ... },

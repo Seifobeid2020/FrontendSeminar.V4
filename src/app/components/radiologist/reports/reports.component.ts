@@ -1,8 +1,7 @@
 import { Report } from './report.model';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { ReportService } from './report.service';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-reports',
@@ -22,10 +21,7 @@ export class ReportsComponent implements OnInit {
 
   @ViewChild('reportTable', { static: true }) reportTable;
 
-  constructor(
-    private reportService: ReportService,
-    private ref: ChangeDetectorRef
-  ) {}
+  constructor(private reportService: ReportService) {}
 
   ngOnInit() {
     this.reportService.getReports().then((reports) => {

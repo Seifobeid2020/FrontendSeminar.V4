@@ -5,16 +5,16 @@
       <button
         pButton
         pRipple
-        label="Go To Advance Reports"
+        label="Go Back To Reports"
         icon="pi pi-chart-line"
         class="p-button-success p-mr-2"
-        [routerLink]="['advance']"
+        [routerLink]="['/radiologist/reports']"
       ></button>
     </ng-template>
   </p-toolbar>
 
   <p-table
-    #reportTable
+    #advanceReportTable
     [value]="reports"
     dataKey="id"
     [rows]="10"
@@ -56,53 +56,26 @@
       <tr>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
-            Kind
+            Report Kind
             <p-columnFilter
               type="text"
-              field="typeOfReport"
+              field="reportKind"
               display="menu"
             ></p-columnFilter>
           </div>
         </th>
 
-        <!-- <th>
-        <div class="p-d-flex p-jc-between p-ai-center">
-          Agent
-          <p-columnFilter
-            field="representative"
-            matchMode="in"
-            display="menu"
-            [showMatchModes]="false"
-            [showOperator]="false"
-            [showAddButton]="false"
-          >
-            <ng-template pTemplate="header">
-              <div class="p-px-3 p-pt-3 p-pb-0">
-                <span class="p-text-bold">Agent Picker</span>
-              </div>
-            </ng-template>
-            <ng-template
-              pTemplate="filter"
-              let-value
-              let-filter="filterCallback"
-            >
-              <p-multiSelect
-                [ngModel]="value"
-                [options]="representatives"
-                placeholder="Any"
-                (onChange)="filter($event.value)"
-                optionLabel="name"
-              >
-                <ng-template let-option pTemplate="item">
-                  <div class="p-multiselect-representative-option">
-                    <span class="p-ml-1">{{ option.name }}</span>
-                  </div>
-                </ng-template>
-              </p-multiSelect>
-            </ng-template>
-          </p-columnFilter>
-        </div>
-      </th> -->
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Type of Report Kind
+            <p-columnFilter
+              type="text"
+              field="typeOfReportKind"
+              display="menu"
+            ></p-columnFilter>
+          </div>
+        </th>
+
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
             Date
@@ -113,6 +86,7 @@
             ></p-columnFilter>
           </div>
         </th>
+
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
             Balance
@@ -129,7 +103,10 @@
     <ng-template pTemplate="body" let-report>
       <tr>
         <td>
-          {{ report.typeOfReport }}
+          {{ report.reportKind }}
+        </td>
+        <td>
+          {{ report.typeOfReportKind }}
         </td>
         <td>
           {{ report.date | date: "MM/dd/yyyy" }}
