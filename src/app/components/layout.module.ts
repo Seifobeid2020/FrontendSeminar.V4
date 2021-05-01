@@ -3,23 +3,8 @@ import { NgModule } from '@angular/core';
 import { LayoutComponent } from './layout.component';
 import { LayoutRoutingModule } from './layout-routing.module';
 
-// import { CommonModule } from '@angular/common';
-// import { MenubarModule } from 'primeng/menubar';
-// import { InputTextModule } from 'primeng/inputtext';
-// import { ButtonModule } from 'primeng/button';
-// import { PanelMenuModule } from 'primeng/panelmenu';
-// import { SharedModule } from 'primeng/api';
-
 @NgModule({
-  imports: [
-    //CommonModule,
-    LayoutRoutingModule,
-    // MenubarModule,
-    // InputTextModule,
-    // ButtonModule,
-    // PanelMenuModule,
-    // SharedModule,
-  ],
+  imports: [LayoutRoutingModule],
   declarations: [LayoutComponent],
 })
 export class LayoutModule {}
