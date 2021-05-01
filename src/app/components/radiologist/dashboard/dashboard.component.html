@@ -1,7 +1,3 @@
-<div class="main-container">
-  .
-  <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-</div>
 <div>
   <div class="p-grid mt-4">
     <!-- 11111 -->
@@ -10,13 +6,15 @@
         <div class="card-body p-p-4">
           <div class="media">
             <div class="media-body text-left">
-              <span class="text-white" style="font-size: 1.7rem">2050</span>
+              <span class="text-white" style="font-size: 1.7rem">{{
+                totalPatients
+              }}</span>
               <br />
               <span class="text-white">Total Patients</span>
             </div>
             <div class="align-self-center w-icon">
               <i
-                class="pi pi-user text-white"
+                class="pi pi-users text-white"
                 style="font-size: 1.7rem; padding-right: 1.5rem"
               ></i>
             </div>
@@ -30,7 +28,9 @@
         <div class="card-body p-p-4">
           <div class="media">
             <div class="media-body text-left">
-              <span class="text-white" style="font-size: 1.7rem">3250</span>
+              <span class="text-white" style="font-size: 1.7rem">{{
+                totalExpanses
+              }}</span>
               <br />
               <span class="text-white">Total Expenses</span>
             </div>
@@ -47,12 +47,17 @@
         <div class="card-body p-p-4">
           <div class="media">
             <div class="media-body text-left">
-              <span class="text-white" style="font-size: 1.7rem">87.5%</span>
+              <span class="text-white" style="font-size: 1.7rem">{{
+                totalIncomes
+              }}</span>
               <br />
-              <span class="text-white">Total Revenue</span>
+              <span class="text-white">Total Incomes</span>
             </div>
             <div class="align-self-center w-icon">
-              <i class="pi pi-check text-white" style="font-size: 2rem"></i>
+              <i
+                class="pi pi-arrow-circle-up text-white"
+                style="font-size: 2rem"
+              ></i>
             </div>
           </div>
         </div>
@@ -64,12 +69,14 @@
         <div class="card-body p-p-4">
           <div class="media">
             <div class="media-body text-left">
-              <span class="text-white" style="font-size: 1.7rem">2550</span>
+              <span class="text-white" style="font-size: 1.7rem">{{
+                newWeeklyPatientsCount
+              }}</span>
               <br />
-              <span class="text-white">New Users</span>
+              <span class="text-white">New Weekly Patients</span>
             </div>
             <div class="align-self-center w-icon">
-              <i class="pi pi-check text-white" style="font-size: 2rem"></i>
+              <i class="pi pi-user text-white" style="font-size: 2rem"></i>
             </div>
           </div>
         </div>
@@ -84,21 +91,23 @@
       <div class="card">
         <div class="card-header">Last 5 Patients</div>
         <div class="card-body">
-          <p-table [value]="products">
+          <p-table [value]="lastFivePatients">
             <ng-template pTemplate="header">
               <tr>
-                <th>Code</th>
                 <th>Name</th>
-                <th>Category</th>
-                <th>Quantity</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Phone Number</th>
+                <th>Visit Date</th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-product>
+            <ng-template pTemplate="body" let-patient>
               <tr>
-                <td>{{ product.code }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.quantity }}</td>
+                <td>{{ patient.fullName }}</td>
+                <td>{{ patient.age }}</td>
+                <td>{{ patient.gender == 1 ? "Male" : "Female" }}</td>
+                <td>{{ patient.phoneNumber }}</td>
+                <td>{{ patient.createdAt | date: "yyyy-MM-dd" }}</td>
               </tr>
             </ng-template>
           </p-table>
@@ -112,21 +121,21 @@
   <div class="p-grid mt-4">
     <div class="p-col-12 p-lg-5 p-xl-6">
       <div class="card">
-        <div class="card-header">Last 5 Patients</div>
+        <div class="card-header">Last 5 Expence</div>
         <div class="card-body">
-          <p-table [value]="products">
+          <p-table [value]="lastFiveExpenses">
             <ng-template pTemplate="header">
               <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Quantity</th>
+                <th>Expense Type Name</th>
+                <th>Expense Value</th>
+                <th>Date</th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-product>
+            <ng-template pTemplate="body" let-expense>
               <tr>
-                <td>{{ product.name }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.quantity }}</td>
+                <td>{{ expense.expenseTypeName }}</td>
+                <td>{{ expense.expenseValue }}</td>
+                <td>{{ expense.createdAt | date: "yyyy-MM-dd" }}</td>
               </tr>
             </ng-template>
           </p-table>

@@ -119,6 +119,16 @@ h4 {
 }
 .card-header:first-child {
   border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+  background: #17ead9;
+  background: -webkit-linear-gradient(45deg, #17ead9, #6078ea) !important;
+  background: linear-gradient(45deg, #17ead9, #6078ea) !important;
+  /* background: rgb(85, 70, 255);
+  background: linear-gradient(
+    45deg,
+    rgba(85, 70, 255, 1) 0%,
+    rgba(134, 239, 244, 1) 50%,
+    rgba(94, 79, 255, 1) 100%
+  ); */
 }
 .card-header {
   padding: 0.75rem 1.25rem;

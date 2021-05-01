@@ -1,11 +1,8 @@
+import { ExpenseDashboard } from './../shared/models/expense-dashboard.model';
+import { PatientDashboard } from './../shared/models/patient-dashboard.model';
 import { Component, OnInit } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-interface Product {
-  code;
-  name;
-  category;
-  quantity;
-}
+
+import { DashboardService } from '../shared/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,28 +10,56 @@ interface Product {
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  products: Product[] = [
-    {
-      code: 's',
-      name: 'd',
-      category: 'a',
-      quantity: 'sa',
-    },
-  ];
   data: any;
 
-  constructor() {
-    this.data = {
-      labels: ['A', 'B', 'C'],
-      datasets: [
-        {
-          data: [300, 50, 100],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-          hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-        },
-      ],
-    };
+  totalPatients: number = 0;
+
+  totalExpanses: number = 0;
+
+  totalIncomes: number = 0;
+
+  newWeeklyPatientsCount: number = 0;
+
+  lastFivePatients: PatientDashboard[];
+
+  lastFiveExpenses: ExpenseDashboard[];
+
+  constructor(private dashboardService: DashboardService) {
+    this.dashboardService.getTotalExpanse().then((exp) => {
+      this.dashboardService.getTotalIncomes().then((inc) => {
+        this.data = {
+          labels: ['Incomes', 'Expenses'],
+          datasets: [
+            {
+              data: [inc, exp],
+              backgroundColor: ['#36A2EB', '#FF6384'],
+              hoverBackgroundColor: ['#36A2EB', '#FF6384'],
+            },
+          ],
+        };
+      });
+    });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dashboardService
+      .getTotalPatientsCount()
+      .then((data) => (this.totalPatients = data));
+    this.dashboardService
+      .getLastFivePatients()
+      .then((patients) => (this.lastFivePatients = patients));
+    this.dashboardService
+      .getTotalExpanse()
+      .then((expanses) => (this.totalExpanses = expanses));
+
+    this.dashboardService
+      .getNewWeeklyPatientsCount()
+      .then((patients) => (this.newWeeklyPatientsCount = patients));
+    this.dashboardService
+      .getTotalIncomes()
+      .then((incomes) => (this.totalIncomes = incomes));
+    this.dashboardService
+      .getLastFiveExpenses()
+      .then((expenses) => (this.lastFiveExpenses = expenses));
+  }
 }
