@@ -6,10 +6,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from 'src/shared/page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
-  // {
-  //   path: 'login/callback',
-  //   component: OktaCallbackComponent,
-  // },
   {
     path: '',
     // canActivate: [OktaAuthGuard],

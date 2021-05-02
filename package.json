@@ -32,6 +32,7 @@
     "file-saver": "^2.0.5",
     "firebase": "^8.3.1",
     "font-awesome": "^4.7.0",
+    "ngx-cookie-service": "^11.0.2",
     "primeflex": "2.0.0",
     "primeicons": "^4.1.0",
     "primeng": "^11.3.0-rc.1",

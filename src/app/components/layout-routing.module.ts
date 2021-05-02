@@ -1,6 +1,3 @@
-import { Patient } from './radiologist/shared/models/patient.model';
-import { PatientModule } from './radiologist/patient/patient.module';
-import { PatientComponent } from './radiologist/patient/patient.component';
 import { LayoutComponent } from './layout.component';
 import { NgModule } from '@angular/core';
 
@@ -10,10 +7,9 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    // component: LayoutComponent,
-    // canActivate: [OktaAuthGuard],
+    component: LayoutComponent,
+
     children: [
-      { path: '', redirectTo: 'radiologist', pathMatch: 'full' },
       {
         path: 'radiologist',
         loadChildren: () =>

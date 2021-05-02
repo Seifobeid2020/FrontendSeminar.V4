@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DashboardService {
-  baseUrl = 'https://localhost:5021/gateway/Dashboard/';
+  baseUrl = 'http://localhost:5020/gateway/Dashboard/';
 
   constructor(private http: HttpClient) {}
 

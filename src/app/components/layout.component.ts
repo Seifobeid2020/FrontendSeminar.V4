@@ -1,6 +1,9 @@
-// import { OktaAuthService } from '@okta/okta-angular';
-import { MenuItem } from 'primeng/api';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-layout',
@@ -8,9 +11,57 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./layout.component.css'],
 })
 export class LayoutComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private auth: AngularFireAuth,
+    private router: Router,
+    private cookieService: CookieService,
+    private http: HttpClient
+  ) {}
 
-  ngOnInit() {}
+  user: any;
+  idToken: any;
+  role: any;
+
+  async ngOnInit() {
+    const cookieExists: boolean = this.cookieService.check('__session');
+    console.log(cookieExists);
+    if (cookieExists) {
+      this.idToken = this.cookieService.get('__session');
+      this.http
+        .get<{ token: string }>(
+          'https://us-central1-drradauthpay.cloudfunctions.net/generateCustomToken',
+          {
+            params: new HttpParams().append('idToken', this.idToken),
+          }
+        )
+        .subscribe((res) => {
+          this.auth.signInWithCustomToken(res.token).then((userCred) => {
+            this.user = userCred.user;
+            console.log(this.user);
+            this.getCustomClaimRole().then((role) => {
+              if (role == 'dentist') {
+                this.router.navigate(['/dentist']);
+              } else if (role == 'radiologist') {
+                this.router.navigate(['/radiologist']);
+              }
+            });
+          });
+        });
+    } else {
+      // window.location.href = 'http://localhost:3000/login.html';
+      console.log('Cookie not found');
+    }
+
+    if (this.user) {
+      console.log('User Loggen in ');
+    }
+  }
+
+  async getCustomClaimRole() {
+    await firebase.auth().currentUser.getIdToken(true);
+    const decodedToken = await firebase.auth().currentUser.getIdTokenResult();
+    return decodedToken.claims.stripeRole;
+  }
 
   logout() {
     // this.authService.signOut();

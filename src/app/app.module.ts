@@ -8,6 +8,9 @@ import { SharedModule } from 'src/shared/shared.module';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
+import { CookieService } from 'ngx-cookie-service';
 
 // Configs IMPORT
 import { environment } from 'src/environments/environment';
@@ -28,11 +31,13 @@ import { PageNotFoundComponent } from 'src/shared/page-not-found/page-not-found.
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFireAuthGuardModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
