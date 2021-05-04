@@ -21,28 +21,28 @@ export class MessagePatientService {
     this.auth.currentUser
       .then((user) => {
         this.user = user;
+        this.messagesCollection = afs.collection<MessagePatient>(
+          'messages',
+          (ref) => ref.where('receiverId', '==', this.user.uid)
+        );
+
+        this.messagesCollection
+          .snapshotChanges()
+          .pipe(
+            map((actions) =>
+              actions.map((a) => {
+                const data = a.payload.doc.data();
+                const id = a.payload.doc.id;
+                return { messageId: id, ...data };
+              })
+            )
+          )
+          .subscribe((data) => {
+            this.messages = data;
+            this.messagesChanges.next(this.messages.slice());
+          });
       })
       .catch((error) => console.log(error));
-
-    this.messagesCollection = afs.collection<MessagePatient>(
-      'messages',
-      (ref) => ref.where('receiverId', '==', this.user.uid)
-    );
-    this.messagesCollection
-      .snapshotChanges()
-      .pipe(
-        map((actions) =>
-          actions.map((a) => {
-            const data = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            return { messageId: id, ...data };
-          })
-        )
-      )
-      .subscribe((data) => {
-        this.messages = data;
-        this.messagesChanges.next(this.messages.slice());
-      });
   }
 
   createMessage(message: MessagePatient) {
