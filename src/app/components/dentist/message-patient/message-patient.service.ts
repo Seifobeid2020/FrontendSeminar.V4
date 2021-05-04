@@ -28,7 +28,6 @@ export class MessagePatientService implements OnInit {
     //   })
     //   .catch((error) => console.log(error));
     this.auth.authState.subscribe((user) => {
-      console.log('from message service : ', user);
       this.innet(user.uid);
     });
   }
@@ -52,7 +51,6 @@ export class MessagePatientService implements OnInit {
         )
       )
       .subscribe((data) => {
-        console.log(data);
         this.messages = data;
         this.messagesChanges.next(this.messages.slice());
       });
@@ -63,18 +61,28 @@ export class MessagePatientService implements OnInit {
   }
 
   getAllDoctors() {
-    const users = [];
+    console.log('hello from getAllDoctors');
+    let users = [];
     const docs = this.afs
       .collectionGroup('subscriptions', (ref) =>
         ref.where('role', '==', 'dentist')
       )
       .get();
 
-    docs.subscribe((data) => {
-      data.forEach((doc) => {
-        users.push(doc.ref.parent.parent);
-        console.log(users);
-      });
-    });
+    docs.subscribe(
+      (data) => {
+        data.forEach((doc) => {
+          users.push(doc.ref.parent.parent);
+          doc.ref.parent.parent.onSnapshot((val) => {
+            console.log(val.data());
+          });
+          console.log('data:  ', doc.id, ' -------- ');
+        });
+      },
+      (error) => {
+        console.log('is this error? ');
+        console.log(error);
+      }
+    );
   }
 }

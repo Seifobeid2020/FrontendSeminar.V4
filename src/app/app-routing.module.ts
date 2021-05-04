@@ -1,4 +1,3 @@
-import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
@@ -14,7 +13,6 @@ const appRoutes: Routes = [
   },
   //
 
-  { path: 'home', component: HomeComponent },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' },
 ];
