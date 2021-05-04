@@ -35,9 +35,9 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    this.messagePatientService.getMessagePatient(this.id).then((data) => {
-      this.messagePatientDetails = data;
-    });
+    // this.messagePatientService.getMessagePatient(this.id).then((data) => {
+    //   this.messagePatientDetails = data;
+    // });
 
     // this.radiologistService.getTreatmentTypes().then((response) => {
     //   this.treatmentTypes = response;

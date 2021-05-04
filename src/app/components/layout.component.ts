@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Component, OnInit } from '@angular/core';
@@ -15,7 +16,8 @@ export class LayoutComponent implements OnInit {
     private auth: AngularFireAuth,
     private router: Router,
     private cookieService: CookieService,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {}
 
   user: any;
@@ -50,6 +52,9 @@ export class LayoutComponent implements OnInit {
     } else {
       // window.location.href = 'http://localhost:3000/login.html';
       console.log('Cookie not found');
+      this.authService.SignIn('m3n.ibregeth@gmail.com', 'Maen_1234');
+
+      console.log('this is from layout');
     }
 
     if (this.user) {

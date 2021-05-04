@@ -23,7 +23,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from 'src/shared/page-not-found/page-not-found.component';
-import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, PageNotFoundComponent],
@@ -33,11 +32,11 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
-    AngularFireStorageModule,
-    AngularFireDatabaseModule,
+    // AngularFireStorageModule,
+
     AngularFireAuthModule,
     AngularFireAuthGuardModule,
-    AngularFireMessagingModule,
+
     AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [CookieService, AsyncPipe],

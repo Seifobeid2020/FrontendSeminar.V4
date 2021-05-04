@@ -60,37 +60,34 @@ export class MessagePatientTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.messagePatientService.getMessagePatients().then((response) => {
-      this.messagePatients = response;
-    });
-
-    this.sub = this.messagePatientService.patientsChanged.subscribe(
-      (response) => {
-        // const arr = this.patients.filter(
-        //   (p) => p.patientId == response.patientId
-        // );
-        this.messagePatients = [response, ...this.messagePatients];
-        // if (arr.length > 0) {
-        //   var indexOfModefied = this.patients.findIndex(
-        //     (p) => (p.patientId = response.patientId)
-        //   );
-        //   this.patients[indexOfModefied] = response;
-        // } else {
-        //   response.totalTreatmentCost = this.selectedTreatmentType.defaultCost;
-        //   this.patients = [response, ...this.patients];
-        //   this.newPatientId = response.patientId;
-
-        // let t: Treatment = {
-        //   patientId: this.newPatientId,
-        //   userId: 'maen',
-        //   treatmentCost: this.selectedTreatmentType.defaultCost,
-        //   treatmentTypeId: this.selectedTreatmentType.treatmentTypeId,
-        // };
-
-        //  this.patientService.craeteTreatment(t);
-        // }
-      }
-    );
+    // this.messagePatientService.getMessagePatients().then((response) => {
+    //   this.messagePatients = response;
+    // });
+    // this.sub = this.messagePatientService.patientsChanged.subscribe(
+    //   (response) => {
+    //     // const arr = this.patients.filter(
+    //     //   (p) => p.patientId == response.patientId
+    //     // );
+    //     this.messagePatients = [response, ...this.messagePatients];
+    //     // if (arr.length > 0) {
+    //     //   var indexOfModefied = this.patients.findIndex(
+    //     //     (p) => (p.patientId = response.patientId)
+    //     //   );
+    //     //   this.patients[indexOfModefied] = response;
+    //     // } else {
+    //     //   response.totalTreatmentCost = this.selectedTreatmentType.defaultCost;
+    //     //   this.patients = [response, ...this.patients];
+    //     //   this.newPatientId = response.patientId;
+    //     // let t: Treatment = {
+    //     //   patientId: this.newPatientId,
+    //     //   userId: 'maen',
+    //     //   treatmentCost: this.selectedTreatmentType.defaultCost,
+    //     //   treatmentTypeId: this.selectedTreatmentType.treatmentTypeId,
+    //     // };
+    //     //  this.patientService.craeteTreatment(t);
+    //     // }
+    //   }
+    // );
   }
 
   openNew() {

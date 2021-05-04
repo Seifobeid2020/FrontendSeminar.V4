@@ -1,6 +1,7 @@
+import { AuthService } from './../../auth.service';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
   AngularFirestore,
@@ -9,42 +10,53 @@ import {
 import firebase from 'firebase';
 import { MessagePatient } from '../shared/message-patient.model';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class MessagePatientService {
+@Injectable()
+export class MessagePatientService implements OnInit {
+  userData;
   user: firebase.User;
   messagesCollection: AngularFirestoreCollection<MessagePatient>;
   messages: MessagePatient[];
   messagesChanges = new BehaviorSubject<MessagePatient[]>([]);
-  constructor(private afs: AngularFirestore, private auth: AngularFireAuth) {
-    this.auth.currentUser
-      .then((user) => {
-        this.user = user;
-        this.messagesCollection = afs.collection<MessagePatient>(
-          'messages',
-          (ref) => ref.where('receiverId', '==', this.user.uid)
-        );
-
-        this.messagesCollection
-          .snapshotChanges()
-          .pipe(
-            map((actions) =>
-              actions.map((a) => {
-                const data = a.payload.doc.data();
-                const id = a.payload.doc.id;
-                return { messageId: id, ...data };
-              })
-            )
-          )
-          .subscribe((data) => {
-            this.messages = data;
-            this.messagesChanges.next(this.messages.slice());
-          });
-      })
-      .catch((error) => console.log(error));
+  constructor(
+    private afs: AngularFirestore,
+    private auth: AngularFireAuth,
+    private authService: AuthService
+  ) {
+    // this.auth.currentUser
+    //   .then((user) => {
+    //     this.user = user;
+    //   })
+    //   .catch((error) => console.log(error));
+    this.auth.authState.subscribe((user) => {
+      console.log('from message service : ', user);
+      this.innet(user.uid);
+    });
   }
+  ngOnInit(): void {}
 
+  innet(userID) {
+    this.messagesCollection = this.afs.collection<MessagePatient>(
+      'messages',
+      (ref) => ref.where('receiverId', '==', userID)
+    );
+
+    this.messagesCollection
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { messageId: id, ...data };
+          })
+        )
+      )
+      .subscribe((data) => {
+        console.log(data);
+        this.messages = data;
+        this.messagesChanges.next(this.messages.slice());
+      });
+  }
   createMessage(message: MessagePatient) {
     message.seen = false;
     this.afs.collection('messages').add(message);

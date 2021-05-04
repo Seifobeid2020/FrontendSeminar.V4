@@ -1,3 +1,4 @@
+import { MessagePatientService } from './message-patient/message-patient.service';
 import { SharedModule } from './../../../shared/shared.module';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { ButtonModule } from 'primeng/button';
@@ -9,7 +10,8 @@ import { DentistComponent } from './dentist.component';
 import { DentistRoutingModule } from './dentist-routing.module';
 
 @NgModule({
-  imports: [DentistRoutingModule,
+  imports: [
+    DentistRoutingModule,
     CommonModule,
     DentistRoutingModule,
     MenubarModule,
@@ -19,5 +21,6 @@ import { DentistRoutingModule } from './dentist-routing.module';
     SharedModule,
   ],
   declarations: [DentistComponent],
+  providers: [MessagePatientService],
 })
 export class DentistModule {}
