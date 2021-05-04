@@ -1,5 +1,5 @@
 export interface MessagePatient {
-  messageId?: number;
+  messageId?: string;
   senderId: string;
   receiverId: string;
   imageType: string;
@@ -7,5 +7,6 @@ export interface MessagePatient {
   treatmentId?: number;
   patientName: string;
   patientPhoneNumber: string;
+  seen?: boolean;
   sentAt: Date;
 }
