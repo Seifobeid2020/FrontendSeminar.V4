@@ -61,4 +61,20 @@ export class MessagePatientService implements OnInit {
     message.seen = false;
     this.afs.collection('messages').add(message);
   }
+
+  getAllDoctors() {
+    const users = [];
+    const docs = this.afs
+      .collectionGroup('subscriptions', (ref) =>
+        ref.where('role', '==', 'dentist')
+      )
+      .get();
+
+    docs.subscribe((data) => {
+      data.forEach((doc) => {
+        users.push(doc.ref.parent.parent);
+        console.log(users);
+      });
+    });
+  }
 }

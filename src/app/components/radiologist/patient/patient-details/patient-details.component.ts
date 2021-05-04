@@ -10,6 +10,8 @@ import { TreatmentType } from '../../shared/models/treatment-type.model';
 
 import { FileUpload } from './shared/file-upload.model';
 import { FileUploadService } from './shared/file-upload.service';
+import { MessagePatient } from 'src/app/components/dentist/shared/message-patient.model';
+import { MessagePatientService } from 'src/app/components/dentist/message-patient/message-patient.service';
 
 @Component({
   selector: 'app-patient-details',
@@ -23,7 +25,8 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
     private radiologistService: RadiologistService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private uploadService: FileUploadService
+    private uploadService: FileUploadService,
+    private mService: MessagePatientService
   ) {}
 
   fileName = '';
@@ -263,9 +266,11 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Send Image %%%%%%%%%%%%%%%%%%%%%%%%%%%
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Send Image %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  sendTreatmentToDoctor(treatment) {
-    this.treatment = { ...treatment };
+  openDialogSendTreatmentToDoctor(treatment) {
     this.sendToDoctorDialog = true;
+    // const message: MessagePatient = { imageUrl: treatment.url };
+    // this.mService.createMessage(message);
+    this.treatment = { ...treatment };
   }
 
   sendToDoctor() {

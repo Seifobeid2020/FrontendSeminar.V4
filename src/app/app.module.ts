@@ -21,19 +21,17 @@ import { AppRoutingModule } from './app-routing.module';
 
 // App Components IMPORT
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from 'src/shared/page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, PageNotFoundComponent],
+  declarations: [AppComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
-    // AngularFireStorageModule,
-
+    AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireAuthGuardModule,
 
