@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { MenuItem } from 'primeng/api';
+import { MessagePatientService } from './message-patient/message-patient.service';
+import firebase from 'firebase';
 
 @Component({
   selector: 'app-dentist',
@@ -7,20 +10,23 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./dentist.component.css'],
 })
 export class DentistComponent implements OnInit {
+  user: firebase.User;
+
   itemsNav: MenuItem[];
   itemsSideNav: MenuItem[];
-  constructor() {}
+  constructor(
+    private auth: AngularFireAuth,
+    private messageService: MessagePatientService
+  ) {}
 
   ngOnInit() {
-    this.itemsNav = [
-      {
-        label: '<img />',
-        escape: false,
-        // style: {
-        //   'margin-left': '1000px',
-        // },
-      },
-    ];
+    this.auth.currentUser
+      .then((user) => {
+        this.user = user;
+      })
+      .catch((err) => console.log(err));
+
+    this.itemsNav = [{}];
 
     this.itemsSideNav = [
       {
@@ -34,10 +40,8 @@ export class DentistComponent implements OnInit {
         icon: 'pi pi-fw pi-user',
         routerLink: ['/dentist/patients'],
       },
-
-    ]
+    ];
   }
 
-  logout() {
-  }
+  logout() {}
 }
