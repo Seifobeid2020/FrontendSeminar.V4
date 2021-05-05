@@ -51,9 +51,16 @@ export class LayoutComponent implements OnInit {
         });
     } else {
       // window.location.href = 'http://localhost:3000/login.html';
-      // this.authService.SignIn('m3n.ibregeth@gmail.com', 'Maen_1234');
+      // this.authService.SignIn('user2@test.com', 'Maen_1234');
+      // this.authService.SignOut();
 
       console.log('this is from layout');
+
+      this.auth.authState.subscribe((user) => {
+        user.getIdTokenResult().then((token) => {
+          console.log(token.claims.stripeRole);
+        });
+      });
     }
   }
 

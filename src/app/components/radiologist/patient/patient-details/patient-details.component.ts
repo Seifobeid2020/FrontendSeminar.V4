@@ -12,6 +12,7 @@ import { FileUpload } from './shared/file-upload.model';
 import { FileUploadService } from './shared/file-upload.service';
 import { MessagePatient } from 'src/app/components/dentist/shared/message-patient.model';
 import { MessagePatientService } from 'src/app/components/dentist/message-patient/message-patient.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-patient-details',
@@ -50,6 +51,8 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
   treatmentDialog: boolean;
 
   submitted: boolean;
+
+  doctors: any;
 
   isEditMode = false;
 
@@ -102,6 +105,25 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
         this.treatments = [response, ...this.treatments];
       }
     });
+
+    this.mService
+      .getAllDoctors()
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => {
+            const data = a.payload.doc.data() as object;
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          })
+        )
+      )
+      .subscribe((data) => {
+        data.forEach((item) => {
+          this.doctors.push(item);
+        });
+        console.log(this.doctors);
+      });
   }
 
   openNew() {

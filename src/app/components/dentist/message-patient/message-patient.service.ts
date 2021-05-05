@@ -64,5 +64,7 @@ export class MessagePatientService implements OnInit {
     const docRef = this.afs.collection('users', (ref) =>
       ref.where('role', '==', 'dentist')
     );
+
+    return docRef;
   }
 }
