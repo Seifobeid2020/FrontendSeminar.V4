@@ -60,8 +60,6 @@ export class AuthService {
         this.ngZone.run(() => {
           this.router.navigate(['dentist']);
         });
-
-        this.SetUserData(result.user);
       })
       .catch((error) => {
         window.alert(error.message);
@@ -116,7 +114,6 @@ export class AuthService {
         this.ngZone.run(() => {
           this.router.navigate(['dashboard']);
         });
-        this.SetUserData(result.user);
       })
       .catch((error) => {
         window.alert(error);
@@ -126,21 +123,6 @@ export class AuthService {
   /* Setting up user data when sign in with username/password,
   sign up with username/password and sign in with social auth
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
-    );
-    const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
 
   // Sign out
   SignOut() {

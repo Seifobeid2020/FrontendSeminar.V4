@@ -51,14 +51,9 @@ export class LayoutComponent implements OnInit {
         });
     } else {
       // window.location.href = 'http://localhost:3000/login.html';
-      console.log('Cookie not found');
-      this.authService.SignIn('m3n.ibregeth@gmail.com', 'Maen_1234');
+      // this.authService.SignIn('m3n.ibregeth@gmail.com', 'Maen_1234');
 
       console.log('this is from layout');
-    }
-
-    if (this.user) {
-      console.log('User Loggen in ');
     }
   }
 
