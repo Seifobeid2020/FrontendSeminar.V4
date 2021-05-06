@@ -26,8 +26,7 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
     private radiologistService: RadiologistService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private uploadService: FileUploadService,
-    private mService: MessagePatientService
+    private uploadService: FileUploadService
   ) {}
 
   fileName = '';
@@ -55,6 +54,8 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
   doctors: any;
 
   isEditMode = false;
+
+  groupedCities;
 
   //send items
   sendToDoctorDialog = false;
@@ -106,24 +107,30 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.mService
-      .getAllDoctors()
-      .snapshotChanges()
-      .pipe(
-        map((actions) =>
-          actions.map((a) => {
-            const data = a.payload.doc.data() as object;
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          })
-        )
-      )
-      .subscribe((data) => {
-        data.forEach((item) => {
-          this.doctors.push(item);
-        });
-        console.log(this.doctors);
-      });
+    // this.mService
+    //   .getAllDoctors()
+    //   .snapshotChanges()
+    //   .pipe(
+    //     map((actions) =>
+    //       actions.map((a) => {
+    //         const data = a.payload.doc.data() as object;
+    //         const id = a.payload.doc.id;
+    //         return { id, ...data };
+    //       })
+    //     )
+    //   )
+    //   .subscribe((data) => {
+    //     data.forEach((item) => {
+    //       this.doctors.push(item);
+    //     });
+    //     console.log(this.doctors);
+    //   });
+
+    this.radiologistService.getAllDoctors().then((data) => {
+      this.groupedCities = data;
+
+      console.log(data);
+    });
   }
 
   openNew() {
@@ -305,38 +312,38 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
 
     this.sendToDoctorDialog = false;
   }
-  groupedCities = [
-    {
-      label: 'Germany',
-      value: 'de',
-      items: [
-        { label: 'Berlin', value: 'Berlin' },
-        { label: 'Frankfurt', value: 'Frankfurt' },
-        { label: 'Hamburg', value: 'Hamburg' },
-        { label: 'Munich', value: 'Munich' },
-      ],
-    },
-    {
-      label: 'USA',
-      value: 'us',
-      items: [
-        { label: 'Chicago', value: 'Chicago' },
-        { label: 'Los Angeles', value: 'Los Angeles' },
-        { label: 'New York', value: 'New York' },
-        { label: 'San Francisco', value: 'San Francisco' },
-      ],
-    },
-    {
-      label: 'Japan',
-      value: 'jp',
-      items: [
-        { label: 'Kyoto', value: 'Kyoto' },
-        { label: 'Osaka', value: 'Osaka' },
-        { label: 'Tokyo', value: 'Tokyo' },
-        { label: 'Yokohama', value: 'Yokohama' },
-      ],
-    },
-  ];
+  // groupedCities = [
+  //   {
+  //     label: 'Germany',
+  //     value: 'de',
+  //     items: [
+  //       { label: 'Berlin', value: 'Berlin' },
+  //       { label: 'Frankfurt', value: 'Frankfurt' },
+  //       { label: 'Hamburg', value: 'Hamburg' },
+  //       { label: 'Munich', value: 'Munich' },
+  //     ],
+  //   },
+  //   {
+  //     label: 'USA',
+  //     value: 'us',
+  //     items: [
+  //       { label: 'Chicago', value: 'Chicago' },
+  //       { label: 'Los Angeles', value: 'Los Angeles' },
+  //       { label: 'New York', value: 'New York' },
+  //       { label: 'San Francisco', value: 'San Francisco' },
+  //     ],
+  //   },
+  //   {
+  //     label: 'Japan',
+  //     value: 'jp',
+  //     items: [
+  //       { label: 'Kyoto', value: 'Kyoto' },
+  //       { label: 'Osaka', value: 'Osaka' },
+  //       { label: 'Tokyo', value: 'Tokyo' },
+  //       { label: 'Yokohama', value: 'Yokohama' },
+  //     ],
+  //   },
+  // ];
 
   ngOnDestroy() {
     this.sub.unsubscribe();

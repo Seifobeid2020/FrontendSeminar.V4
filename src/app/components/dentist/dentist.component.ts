@@ -48,7 +48,7 @@ export class DentistComponent implements OnInit, OnDestroy {
         routerLink: ['/dentist/patients'],
       },
     ];
-    this.messageService.getAllDoctors();
+    // this.messageService.getAllDoctors();
   }
 
   logout() {}

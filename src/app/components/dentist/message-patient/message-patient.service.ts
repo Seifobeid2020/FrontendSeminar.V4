@@ -1,3 +1,4 @@
+import { DoctorCityLabel } from './../../radiologist/patient/patient-details/shared/doctor-city-label.model';
 import { AuthService } from './../../auth.service';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -58,13 +59,5 @@ export class MessagePatientService implements OnInit {
   createMessage(message: MessagePatient) {
     message.seen = false;
     this.afs.collection('messages').add(message);
-  }
-
-  getAllDoctors() {
-    const docRef = this.afs.collection('users', (ref) =>
-      ref.where('role', '==', 'dentist')
-    );
-
-    return docRef;
   }
 }

@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ExpenseType } from './shared/models/expense-type.model';
 import { TreatmentType } from './shared/models/treatment-type.model';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { DoctorCityLabel } from './patient/patient-details/shared/doctor-city-label.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,76 @@ export class RadiologistService {
   expenseTypeChanged = new Subject<ExpenseType>();
   expenseChanged = new Subject<Expense>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private afs: AngularFirestore) {}
+
+  async getAllDoctors() {
+    // const docRef = this.afs.collection('users', (ref) =>
+    //   ref.where('role', '==', 'dentist')
+    // );
+
+    // return docRef;
+
+    //way 1
+
+    // const usersRef = this.afs.collection('users');
+
+    // usersRef
+    //   .get()
+    //   .forEach((doc) => doc.forEach((user) => console.log(user.data())));
+
+    //way 2
+    // let docLabel: DoctorCityLabel[];
+    // var users = this.afs
+    //   .collection('users', (ref) => ref.where('role', '==', 'dentist'))
+    //   .valueChanges();
+    // users.pipe(map(data=>data.map((user:any) =>{
+    //   let userLabel:DoctorCityLabel = {
+    //     label: user.city,
+    //     value: user.city,
+    //     items: {
+    //       label: user.displayName,
+    //       value: user.city,
+    //     }
+    //   }
+    // })));
+
+    //WAY 3
+    let docLabel: DoctorCityLabel[] = [];
+
+    var usersArr = [];
+    let citySet = new Set();
+    await this.afs
+      .collection('users', (ref) => ref.where('role', '==', 'dentist'))
+      .get()
+      .forEach((data) =>
+        data.forEach((user: any) => {
+          citySet.add(user.data().city);
+          usersArr.push(user.data());
+        })
+      );
+    // console.log(usersArr);
+    // console.log(citySet);
+    // usersArr.forEach((element) => {
+    //   console.log('test', element);
+    // });
+    citySet.forEach((city: any) => {
+      let userLabel: DoctorCityLabel = {
+        label: city,
+        value: city,
+        items: [],
+      };
+      usersArr.forEach((user) => {
+        if (user.city == city) {
+          userLabel.items.push({
+            label: user.displayName,
+            value: user.city,
+          });
+        }
+      });
+      docLabel.push(userLabel);
+    });
+    return docLabel;
+  }
 
   //Treatment Type Service
   editTreatmentType(id: number, treatmentType: TreatmentType) {

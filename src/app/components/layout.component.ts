@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import firebase from 'firebase/app';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-layout',
@@ -17,7 +18,8 @@ export class LayoutComponent implements OnInit {
     private router: Router,
     private cookieService: CookieService,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    public fireDB: AngularFirestore
   ) {}
 
   user: any;
@@ -51,16 +53,10 @@ export class LayoutComponent implements OnInit {
         });
     } else {
       // window.location.href = 'http://localhost:3000/login.html';
-      // this.authService.SignIn('user2@test.com', 'Maen_1234');
+      this.authService.SignIn('user2@test.com', 'Maen_1234');
       // this.authService.SignOut();
 
       console.log('this is from layout');
-
-      this.auth.authState.subscribe((user) => {
-        user.getIdTokenResult().then((token) => {
-          console.log(token.claims.stripeRole);
-        });
-      });
     }
   }
 

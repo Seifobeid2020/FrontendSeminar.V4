@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DashboardService {
-  baseUrl = 'http://localhost:5020/gateway/Dashboard/';
+  baseUrl = 'https://localhost:5021/gateway/Dashboard/';
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class DashboardService {
       .get<number>(this.baseUrl + 'PatientCount')
       .toPromise()
       .then((data) => {
-        console.log(data);
+        //  console.log(data);
         return data;
       });
   }
@@ -25,7 +25,7 @@ export class DashboardService {
       .get<number>(this.baseUrl + 'TotalExpanse')
       .toPromise()
       .then((data) => {
-        console.log(data);
+        //   console.log(data);
         return data;
       });
   }
@@ -34,7 +34,7 @@ export class DashboardService {
       .get<number>(this.baseUrl + 'TotalIncomes')
       .toPromise()
       .then((data) => {
-        console.log(data);
+        //  console.log(data);
         return data;
       });
   }
@@ -43,7 +43,7 @@ export class DashboardService {
       .get<number>(this.baseUrl + 'NewWeeklyPatientsCount')
       .toPromise()
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         return data;
       });
   }
@@ -52,7 +52,7 @@ export class DashboardService {
       .get<PatientDashboard[]>(this.baseUrl + 'LastFivePatients')
       .toPromise()
       .then((data) => {
-        console.log(data);
+        //    console.log(data);
         return data;
       });
   }
@@ -61,7 +61,7 @@ export class DashboardService {
       .get<ExpenseDashboard[]>(this.baseUrl + 'LastFiveExpenses')
       .toPromise()
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         return data;
       });
   }
