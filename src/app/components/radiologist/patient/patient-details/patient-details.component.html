@@ -251,10 +251,10 @@
   styleClass="p-fluid"
 >
   <div class="p-field" [style]="{ height: '500px' }">
-    <h5>Group</h5>
+    <h5>Doctors</h5>
     <p-dropdown
-      [options]="groupedCities"
-      [(ngModel)]="selectedCountry"
+      [options]="groupedDoctors"
+      [(ngModel)]="selectedDoctor"
       placeholder="Select a City"
       [filter]="true"
       [group]="true"
@@ -283,7 +283,7 @@
       label="Send"
       icon="pi pi-check"
       class="p-button-text"
-      (click)="sendToDoctor()"
+      (click)="onSendToDoctor()"
     ></button>
   </ng-template>
 </p-dialog>

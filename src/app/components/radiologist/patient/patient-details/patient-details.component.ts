@@ -55,28 +55,16 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
 
   isEditMode = false;
 
-  groupedCities;
+  groupedDoctors;
 
   //send items
   sendToDoctorDialog = false;
-
-  countries: any[] = [
-    { name: 'Australia', code: 'AU' },
-    { name: 'Brazil', code: 'BR' },
-    { name: 'China', code: 'CN' },
-    { name: 'Egypt', code: 'EG' },
-    { name: 'France', code: 'FR' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'India', code: 'IN' },
-    { name: 'Japan', code: 'JP' },
-    { name: 'Spain', code: 'ES' },
-    { name: 'United States', code: 'US' },
-  ];
-  selectedCountry: string;
+  selectedDoctor: string;
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
     this.patientService.getPatient(this.id).then((data) => {
+      console.log('this is data from details:', data);
       this.patientDetails = data;
     });
 
@@ -127,7 +115,7 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
     //   });
 
     this.radiologistService.getAllDoctors().then((data) => {
-      this.groupedCities = data;
+      this.groupedDoctors = data;
 
       console.log(data);
     });
@@ -302,7 +290,15 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
     this.treatment = { ...treatment };
   }
 
-  sendToDoctor() {
+  onSendToDoctor() {
+    this.radiologistService.sendToDoctor(
+      this.selectedDoctor,
+      this.treatment,
+      this.patientDetails
+    );
+
+    console.log(this.selectedDoctor);
+
     this.messageService.add({
       severity: 'success',
       summary: 'Successful',
@@ -312,38 +308,6 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
 
     this.sendToDoctorDialog = false;
   }
-  // groupedCities = [
-  //   {
-  //     label: 'Germany',
-  //     value: 'de',
-  //     items: [
-  //       { label: 'Berlin', value: 'Berlin' },
-  //       { label: 'Frankfurt', value: 'Frankfurt' },
-  //       { label: 'Hamburg', value: 'Hamburg' },
-  //       { label: 'Munich', value: 'Munich' },
-  //     ],
-  //   },
-  //   {
-  //     label: 'USA',
-  //     value: 'us',
-  //     items: [
-  //       { label: 'Chicago', value: 'Chicago' },
-  //       { label: 'Los Angeles', value: 'Los Angeles' },
-  //       { label: 'New York', value: 'New York' },
-  //       { label: 'San Francisco', value: 'San Francisco' },
-  //     ],
-  //   },
-  //   {
-  //     label: 'Japan',
-  //     value: 'jp',
-  //     items: [
-  //       { label: 'Kyoto', value: 'Kyoto' },
-  //       { label: 'Osaka', value: 'Osaka' },
-  //       { label: 'Tokyo', value: 'Tokyo' },
-  //       { label: 'Yokohama', value: 'Yokohama' },
-  //     ],
-  //   },
-  // ];
 
   ngOnDestroy() {
     this.sub.unsubscribe();

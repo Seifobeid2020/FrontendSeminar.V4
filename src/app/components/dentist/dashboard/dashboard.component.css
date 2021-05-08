@@ -1,0 +1,14 @@
+.dropdown-menu {
+  position: absolute;
+  width: 400px;
+  padding: 0;
+  background-color: burlywood;
+}
+.ul-main {
+  list-style: none;
+}
+.date-time {
+  color: #2e89ff;
+  font-family: var(--font-family-segoe);
+  font-size: 0.8125rem;
+}

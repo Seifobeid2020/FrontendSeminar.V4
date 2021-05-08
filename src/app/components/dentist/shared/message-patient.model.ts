@@ -9,4 +9,8 @@ export interface MessagePatient {
   patientPhoneNumber: string;
   seen?: boolean;
   sentAt: Date;
+  savedInDB?: boolean;
+  receiverImage?: string;
+  patientGender?: string;
+  patientAge?: number;
 }

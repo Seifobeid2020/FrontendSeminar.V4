@@ -22,49 +22,21 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
 
   id: number;
 
-  messagePatientDetails: MessagePatient;
+  messagePatientDetails;
 
   imageAI;
 
   imageAIReceived: boolean = false;
 
   //send items
-  sendToDoctorDialog = false;
-
-  selectedCountry: string;
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    // this.messagePatientService.getMessagePatient(this.id).then((data) => {
-    //   this.messagePatientDetails = data;
-    // });
-
-    // this.radiologistService.getTreatmentTypes().then((response) => {
-    //   this.treatmentTypes = response;
-
-    //   this.selectedTreatmentType = this.treatmentTypes[0];
-    // });
-
-    // this.patientService
-    //   .getTreatments(this.id)
-    //   .then((data) => {
-    //     this.treatments = data;
-    //   })
-    //   .catch((err) => console.log(err));
-
-    // this.sub = this.patientService.treatmentsChanged.subscribe((response) => {
-    //   const arr = this.treatments.filter(
-    //     (t) => t.treatmentId == response.treatmentId
-    //   );
-    //   if (arr.length > 0) {
-    //     var indexOfModefied = this.treatments.findIndex(
-    //       (p) => (p.treatmentId = response.treatmentId)
-    //     );
-    //     this.treatments[indexOfModefied] = response;
-    //   } else {
-    //     this.treatments = [response, ...this.treatments];
-    //   }
-    // });
+    this.messagePatientService.getMessage(this.id).then((e) =>
+      e.subscribe((f) => {
+        this.messagePatientDetails = f.data();
+      })
+    );
   }
 
   sendToAIConverter() {

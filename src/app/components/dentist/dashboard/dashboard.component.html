@@ -1,1 +1,55 @@
-<p>dashboard works!</p>
+{{ showBox }}
+<br />
+
+<li
+  class="pi pi-bell p-mr-4 p-text-secondary"
+  pBadge
+  style="font-size: 2rem"
+  value="{{ messagesArray?.length }}"
+  (click)="onClickNotiction()"
+  id="notifiction"
+></li>
+
+<div
+  class="dropdown-menu dropdown-menu-right animated fadeIn"
+  (clickOutside)="onClickedOutside($event)"
+  *ngIf="showBox"
+>
+  <ul class="ul-main">
+    <div *ngFor="let message of messagesArray; index as i">
+      <li *ngIf="i < 6">
+        <div class="p-grid">
+          <div class="p-col-4">
+            <a [href]="message.imageUrl">
+              <img
+                [src]="message.imageUrl"
+                [alt]="message.imageType"
+                width="80"
+              />
+            </a>
+          </div>
+          <div class="p-col-8">
+            <div class="p-mb-6">sdsadsa</div>
+            <div class="p-mb-6">
+              <span> {{ message.patientName }}</span>
+              <br />
+              <span> {{ message.patientPhoneNumber }} </span>
+              <br />
+              <span class="date-time">
+                {{ message.sentAt.toDate() | date: "MMM d, y, h:mm a" }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </li>
+    </div>
+  </ul>
+  <div>
+    <a [routerLink]="['patients']">see all </a>
+  </div>
+</div>
+<div class="p-grid p-align-center">
+  <div class="p-col">4</div>
+  <div class="p-col">4</div>
+  <div class="p-col">4</div>
+</div>

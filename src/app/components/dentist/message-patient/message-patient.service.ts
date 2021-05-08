@@ -18,46 +18,102 @@ export class MessagePatientService implements OnInit {
   messagesCollection: AngularFirestoreCollection<MessagePatient>;
   messages: MessagePatient[];
   messagesChanges = new BehaviorSubject<MessagePatient[]>([]);
+  userUID;
   constructor(
     private afs: AngularFirestore,
     private auth: AngularFireAuth,
     private authService: AuthService
   ) {
-    // this.auth.currentUser
-    //   .then((user) => {
-    //     this.user = user;
-    //   })
-    //   .catch((error) => console.log(error));
-    this.auth.authState.subscribe((user) => {
-      this.innet(user.uid);
+    this.auth.onAuthStateChanged((user) => {
+      this.userUID = user.uid;
     });
   }
-  ngOnInit(): void {}
+  ngOnInit() {}
 
-  innet(userID) {
-    this.messagesCollection = this.afs.collection<MessagePatient>(
-      'messages',
-      (ref) => ref.where('receiverId', '==', userID)
-    );
+  // innet(userID) {
+  //   this.messagesCollection = this.afs.collection<MessagePatient>(
+  //     'messages',
+  //     (ref) => ref.where('receiverId', '==', userID)
+  //   );
 
-    this.messagesCollection
-      .snapshotChanges()
-      .pipe(
-        map((actions) =>
-          actions.map((a) => {
-            const data = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            return { messageId: id, ...data };
-          })
-        )
-      )
-      .subscribe((data) => {
-        this.messages = data;
-        this.messagesChanges.next(this.messages.slice());
-      });
-  }
+  //   this.messagesCollection
+  //     .snapshotChanges()
+  //     .pipe(
+  //       map((actions) =>
+  //         actions.map((a) => {
+  //           const data = a.payload.doc.data();
+  //           const id = a.payload.doc.id;
+  //           return { messageId: id, ...data };
+  //         })
+  //       )
+  //     )
+  //     .subscribe((data) => {
+  //       this.messages = data;
+  //       this.messagesChanges.next(this.messages.slice());
+  //     });
+  // }
   createMessage(message: MessagePatient) {
     message.seen = false;
     this.afs.collection('messages').add(message);
+  }
+  // async getMesseges() {
+  //   const userId = await this.auth.currentUser.then((user) => {
+  //     return user.uid;
+  //   });
+  //   return await this.afs
+  //     .collection('messages', (ref) => ref.where('receiverId', '==', userId))
+  //     .snapshotChanges()
+  //     .subscribe((event) => event);
+  // }
+
+  async getUID() {
+    let id;
+    await this.auth.onAuthStateChanged((user) => {
+      id = user.uid;
+    });
+    return id;
+  }
+
+  async getMessages() {
+    let messagesArray = [];
+    await this.auth.onAuthStateChanged((user) => {
+      this.afs
+        .collection('messages', (ref) =>
+          ref.where('receiverId', '==', user.uid).limit(1)
+        )
+        .snapshotChanges()
+        .subscribe((events) => {
+          events.forEach((change: any) => {
+            if (change.type == 'added') {
+              let tempMessage: any = change.payload.doc.data();
+              tempMessage.uid = change.payload.doc.id;
+              // console.log(tempMessage);
+              messagesArray.push(tempMessage);
+            } else if (change.type == 'modified') {
+            }
+          });
+        });
+    });
+    return messagesArray;
+  }
+  async getMessage(messageUID) {
+    console.log(messageUID);
+    let message;
+    // this.afs
+    //   .collection('messages', (ref) => ref.where('uid', '==', messageUID))
+    //   .get()
+    //   .subscribe((e) => {
+    //     e.docs.forEach((doc) => {
+    //       console.log(doc.data());
+    //     });
+    //   });
+
+    return this.afs.collection('messages').doc(messageUID).get();
+
+    //  .then((test) => {
+    //    test.docs.forEach((doc) => {
+    //      console.log('this is doc:', doc.data());
+    //    });
+    //  })
   }
 }

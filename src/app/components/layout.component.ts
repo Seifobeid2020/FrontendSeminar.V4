@@ -41,7 +41,7 @@ export class LayoutComponent implements OnInit {
         .subscribe((res) => {
           this.auth.signInWithCustomToken(res.token).then((userCred) => {
             this.user = userCred.user;
-            console.log(this.user);
+            //    console.log(this.user);
             this.getCustomClaimRole().then((role) => {
               if (role == 'dentist') {
                 this.router.navigate(['/dentist']);
@@ -51,12 +51,14 @@ export class LayoutComponent implements OnInit {
             });
           });
         });
+
+      console.log('this is from layout if');
     } else {
       // window.location.href = 'http://localhost:3000/login.html';
-      this.authService.SignIn('user2@test.com', 'Maen_1234');
+      // this.authService.SignIn('user2@test.com', 'Maen_1234');
       // this.authService.SignOut();
-
-      console.log('this is from layout');
+      // this.authService.SignOut();
+      console.log('this is from layout else');
     }
   }
 

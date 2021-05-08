@@ -1,3 +1,4 @@
+import { Patient } from './shared/models/patient.model';
 import { Expense } from './shared/models/expense.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -6,6 +7,8 @@ import { ExpenseType } from './shared/models/expense-type.model';
 import { TreatmentType } from './shared/models/treatment-type.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DoctorCityLabel } from './patient/patient-details/shared/doctor-city-label.model';
+import { MessagePatient } from '../dentist/shared/message-patient.model';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +20,11 @@ export class RadiologistService {
   expenseTypeChanged = new Subject<ExpenseType>();
   expenseChanged = new Subject<Expense>();
 
-  constructor(private http: HttpClient, private afs: AngularFirestore) {}
+  constructor(
+    private http: HttpClient,
+    private afs: AngularFirestore,
+    private auth: AngularFireAuth
+  ) {}
 
   async getAllDoctors() {
     // const docRef = this.afs.collection('users', (ref) =>
@@ -58,17 +65,14 @@ export class RadiologistService {
     await this.afs
       .collection('users', (ref) => ref.where('role', '==', 'dentist'))
       .get()
-      .forEach((data) =>
-        data.forEach((user: any) => {
-          citySet.add(user.data().city);
-          usersArr.push(user.data());
-        })
-      );
-    // console.log(usersArr);
-    // console.log(citySet);
-    // usersArr.forEach((element) => {
-    //   console.log('test', element);
-    // });
+      .forEach((data) => {
+        data.docs.forEach((doc: any) => {
+          citySet.add(doc.data().city);
+          var id = doc.id;
+          usersArr.push({ id, ...doc.data() });
+        });
+      });
+
     citySet.forEach((city: any) => {
       let userLabel: DoctorCityLabel = {
         label: city,
@@ -76,16 +80,46 @@ export class RadiologistService {
         items: [],
       };
       usersArr.forEach((user) => {
+        console.log(user);
         if (user.city == city) {
           userLabel.items.push({
             label: user.displayName,
-            value: user.city,
+            value: user.id,
           });
         }
       });
       docLabel.push(userLabel);
     });
     return docLabel;
+  }
+
+  //send treatment to doctor
+  async sendToDoctor(id, tretment, patient: Patient) {
+    const userId = await this.auth.currentUser.then((user) => {
+      return user.uid;
+    });
+    console.log(tretment);
+
+    var message: MessagePatient = {
+      senderId: userId,
+      receiverId: id,
+      receiverImage: tretment.treatmentImageUrl,
+      imageType: tretment.treatmentName,
+      imageUrl: tretment.treatmentImageUrl,
+      treatmentId: tretment.treatmentTypeId,
+      patientName: patient.firstName + ' ' + patient.lastName,
+      patientPhoneNumber: patient.phoneNumber,
+      patientGender: patient.gender == 1 ? 'Male' : 'Female',
+      patientAge: patient.age,
+      seen: false,
+      sentAt: new Date(),
+      savedInDB: false,
+    };
+
+    this.afs
+      .collection('messages')
+      .add(message)
+      .then((message) => console.log(message));
   }
 
   //Treatment Type Service

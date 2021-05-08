@@ -1,12 +1,77 @@
-<p-menubar [model]="itemsNav">
+<p-menubar [model]="itemsNav" styleClass="menubar">
   <ng-template pTemplate="end">
-    <button
+    <div>
+      <a
+        class="pi pi-bell p-mr-4 p-text-secondary noti-a-tag"
+        style="font-size: 2rem"
+        (click)="onClickNotiction($event)"
+        id="notifiction"
+        [ngClass]="{ 'noti-a-tag-clicked': showBox }"
+      >
+        <p-badge
+          class="pi noti-p-badge"
+          styleClass="p-mr-2"
+          value="{{ messagesArray?.length }}"
+          severity="danger"
+          [ngClass]="{ 'show-badge': messagesArray?.length != 0 && !showBox }"
+        >
+        </p-badge>
+      </a>
+
+      <!-- value="{{ messagesArray?.length }}" -->
+      <div
+        class="dropdown-menu dropdown-menu-right animated fadeIn"
+        (clickOutside)="onClickedOutside($event)"
+        *ngIf="showBox"
+      >
+        <div class="notification-continare">
+          <h3>Earlier Notifications</h3>
+          <ul class="ul-main">
+            <div *ngFor="let message of messagesArray; index as i">
+              <li *ngIf="i < 6">
+                <div class="p-grid">
+                  <div class="p-col-2">
+                    <a [href]="message.imageUrl">
+                      <img
+                        [src]="message.imageUrl"
+                        [alt]="message.imageType"
+                        style="height: 56px; width: 56px"
+                      />
+                    </a>
+                  </div>
+                  <div class="p-col-8">
+                    <!-- <div class="p-mb-6">sdsadsa</div>
+                    <div class="p-mb-6">
+                      <span> {{ message.patientName }}</span>
+                      <br />
+                      <span> {{ message.patientPhoneNumber }} </span>
+                      <br />
+                      <span class="date-time">
+                        {{
+                          message.sentAt.toDate() | date: "MMM d, y, h:mm a"
+                        }}</span
+                      >
+                    </div> -->
+                    <span> {{ message.patientName }}</span>
+                  </div>
+                </div>
+              </li>
+            </div>
+          </ul>
+          <div>
+            <a [routerLink]="['patients']" (click)="seeAllHide()">see all </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <button
       type="button"
       pButton
       label="Logout"
       icon="pi pi-sign-out"
       (click)="logout()"
-    ></button>
+    ></button> -->
   </ng-template>
 </p-menubar>
 

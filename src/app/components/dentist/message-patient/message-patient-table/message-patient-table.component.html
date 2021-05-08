@@ -1,57 +1,11 @@
 <p-toast></p-toast>
 <div class="card">
-  <p-toolbar styleClass="p-mb-4">
-    <!-- Delete and Add all Buttons -->
-    <ng-template pTemplate="left">
-      <button
-        pButton
-        pRipple
-        label="New"
-        icon="pi pi-plus"
-        class="p-button-success p-mr-2"
-        (click)="openNew()"
-      ></button>
-      <button
-        pButton
-        pRipple
-        [label]="'Delete'"
-        icon="pi pi-trash"
-        class="p-button-danger"
-        (click)="deleteSelectedPatients()"
-        [disabled]="!selectedPatients || !selectedPatients.length"
-      ></button>
-    </ng-template>
-
-    <ng-template pTemplate="right">
-      <!-- <p-fileUpload
-        mode="basic"
-        accept="image/*"
-        [maxFileSize]="1000000"
-        label="Import"
-        chooseLabel="Import"
-        class="p-mr-2 p-d-inline-block"
-      ></p-fileUpload> -->
-      <button
-        pButton
-        pRipple
-        label="XSL"
-        icon="pi pi-download"
-        class="p-button-help"
-        (click)="exportExcel()"
-        class="p-button-success p-mr-2"
-        pTooltip="XLS"
-        tooltipPosition="bottom"
-      ></button>
-    </ng-template>
-  </p-toolbar>
-
   <p-table
     #dt
     [value]="messagePatients"
     [rows]="10"
     [paginator]="true"
     [globalFilterFields]="['firstName', 'lastName']"
-    [(selection)]="selectedPatients"
     [rowHover]="true"
     dataKey="id"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -64,7 +18,7 @@
   -->
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
-        <h5 class="p-text-bold">Patients</h5>
+        <h2 class="p-text-bold">Patient Messages</h2>
 
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
@@ -85,9 +39,6 @@
   -->
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
         <th pSortableColumn="senderId">
           Sender Id <p-sortIcon field="senderId"></p-sortIcon>
         </th>
@@ -118,15 +69,12 @@
   -->
     <ng-template pTemplate="body" let-messagePatient>
       <tr>
-        <td>
-          <p-tableCheckbox [value]="messagePatient"></p-tableCheckbox>
-        </td>
         <td>{{ messagePatient.senderId }}</td>
 
         <td>{{ messagePatient.imageType }}</td>
         <td>{{ messagePatient.treatmentId }}</td>
         <td>{{ messagePatient.patientName }}</td>
-        <td>{{ messagePatient.sentAt | date: "yyyy-MM-dd" }}</td>
+        <td>{{ messagePatient.sentAt.toDate() | date: "yyyy-MM-dd" }}</td>
         <td>
           {{ messagePatient.patientPhoneNumber }}
         </td>
@@ -137,24 +85,9 @@
             pRipple
             icon="pi pi-search-plus"
             class="p-button-rounded p-button-prime p-mr-2"
-            [routerLink]="['/dentist/patients', messagePatient.messageId]"
+            [routerLink]="['/dentist/patients', messagePatient.uid]"
           ></button>
           <!-- [routerLink]="['/recipes', id, 'edit']" -->
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-success p-mr-2"
-            (click)="editPatient(messagePatient)"
-          ></button>
-
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger"
-            (click)="deletePatient(messagePatient)"
-          ></button>
         </td>
       </tr>
     </ng-template>

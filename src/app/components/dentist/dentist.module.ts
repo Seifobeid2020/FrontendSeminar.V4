@@ -8,8 +8,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DentistComponent } from './dentist.component';
 import { DentistRoutingModule } from './dentist-routing.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { BadgeModule } from 'primeng/badge';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { BrowserModule } from '@angular/platform-browser';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
+  declarations: [DentistComponent, DashboardComponent],
   imports: [
     DentistRoutingModule,
     CommonModule,
@@ -19,8 +25,10 @@ import { DentistRoutingModule } from './dentist-routing.module';
     ButtonModule,
     PanelMenuModule,
     SharedModule,
+    BadgeModule,
+    ClickOutsideModule,
   ],
-  declarations: [DentistComponent],
+
   providers: [MessagePatientService],
 })
 export class DentistModule {}
