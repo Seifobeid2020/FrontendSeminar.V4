@@ -11,9 +11,10 @@
         <p-badge
           class="pi noti-p-badge"
           styleClass="p-mr-2"
-          value="{{ messagesArray?.length }}"
+          value="{{ numOfNotifictions }}"
           severity="danger"
-          [ngClass]="{ 'show-badge': messagesArray?.length != 0 && !showBox }"
+          [ngClass]="{ 'show-badge': numOfNotifictions != 0 && !showBox }"
+          *ngIf="numOfNotifictions != 0 && !showBox"
         >
         </p-badge>
       </a>
@@ -28,38 +29,67 @@
           <h3>Earlier Notifications</h3>
           <ul class="ul-main">
             <div *ngFor="let message of messagesArray; index as i">
-              <li *ngIf="i < 6">
+              <li
+                *ngIf="i < 6"
+                class="message-item"
+                (click)="onMessagePatientNotifictionClick(message)"
+              >
                 <div class="p-grid">
                   <div class="p-col-2">
                     <a [href]="message.imageUrl">
                       <img
                         [src]="message.imageUrl"
                         [alt]="message.imageType"
-                        style="height: 56px; width: 56px"
+                        style="
+                          height: 56px;
+                          width: 56px;
+                          border-radius: 50%;
+                          margin: 5px;
+                          padding: 5px;
+                        "
                       />
                     </a>
                   </div>
-                  <div class="p-col-8">
-                    <!-- <div class="p-mb-6">sdsadsa</div>
-                    <div class="p-mb-6">
-                      <span> {{ message.patientName }}</span>
-                      <br />
-                      <span> {{ message.patientPhoneNumber }} </span>
-                      <br />
-                      <span class="date-time">
+                  <div class="p-col-9">
+                    <span>
+                      <b>
                         {{
-                          message.sentAt.toDate() | date: "MMM d, y, h:mm a"
-                        }}</span
+                          message.receiverName
+                            ? message.receiverName
+                            : "UnKnown"
+                        }}</b
                       >
-                    </div> -->
-                    <span> {{ message.patientName }}</span>
+                    </span>
+                    Send to you New Patient
+                    <span
+                      ><b> {{ message.patientName }}. </b>
+                    </span>
+                    <br />
+                    <span
+                      class="date-time"
+                      [ngStyle]="{
+                        color: !message.seen ? '#2e89ff' : '#303338'
+                      }"
+                    >
+                      {{
+                        message.sentAt.toDate() | date: "MMM d, y, h:mm a"
+                      }}</span
+                    >
+                  </div>
+                  <div class="p-col-1 center-circle" *ngIf="!message.seen">
+                    <div class="seen-circle"></div>
                   </div>
                 </div>
               </li>
             </div>
           </ul>
-          <div>
-            <a [routerLink]="['patients']" (click)="seeAllHide()">see all </a>
+          <div class="see-all-contianer">
+            <a
+              class="see-all"
+              [routerLink]="['patients']"
+              (click)="seeAllHide()"
+              >See All Notifications</a
+            >
           </div>
         </div>
       </div>
@@ -81,9 +111,16 @@
     [style]="{ width: '100%', height: '100%' }"
   ></p-panelMenu>
 </div>
-
+<!--
 <div class="main">
   <div class="p-shadow-5 container">
+    <router-outlet></router-outlet>
+  </div>
+</div> -->
+
+<div class="content-wrapper">
+  <!-- <div class="p-shadow-5 container"> -->
+  <div class="container-fluid">
     <router-outlet></router-outlet>
   </div>
 </div>

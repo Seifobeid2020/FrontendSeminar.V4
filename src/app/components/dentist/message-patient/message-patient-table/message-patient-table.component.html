@@ -39,25 +39,23 @@
   -->
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="senderId">
-          Sender Id <p-sortIcon field="senderId"></p-sortIcon>
-        </th>
-        <th pSortableColumn="imageType">
-          Image Type <p-sortIcon field="imageType"></p-sortIcon>
-        </th>
-        <th pSortableColumn="treatmentId">
-          Treatment Id <p-sortIcon field="treatmentId"></p-sortIcon>
-        </th>
-
         <th pSortableColumn="patientName">
-          Patient Name <p-sortIcon field="patientName"></p-sortIcon>
-        </th>
-        <th pSortableColumn="sentAt">
-          sent At <p-sortIcon field="sentAt"></p-sortIcon>
+          patient Name <p-sortIcon field="patientName"></p-sortIcon>
         </th>
         <th pSortableColumn="patientPhoneNumber">
-          Patient Phone Number
-          <p-sortIcon field="patientPhoneNumber"></p-sortIcon>
+          patient Phone Number<p-sortIcon
+            field="patientPhoneNumber"
+          ></p-sortIcon>
+        </th>
+        <th pSortableColumn="imageType">
+          imageType <p-sortIcon field="imageType"></p-sortIcon>
+        </th>
+        <th pSortableColumn="receiverName">
+          receiver Name <p-sortIcon field="receiverName"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="sentAt">
+          sent At <p-sortIcon field="sentAt"></p-sortIcon>
         </th>
 
         <th></th>
@@ -69,15 +67,12 @@
   -->
     <ng-template pTemplate="body" let-messagePatient>
       <tr>
-        <td>{{ messagePatient.senderId }}</td>
-
-        <td>{{ messagePatient.imageType }}</td>
-        <td>{{ messagePatient.treatmentId }}</td>
         <td>{{ messagePatient.patientName }}</td>
+
+        <td>{{ messagePatient.patientPhoneNumber }}</td>
+        <td>{{ messagePatient.imageType }}</td>
+        <td>{{ messagePatient.receiverName }}</td>
         <td>{{ messagePatient.sentAt.toDate() | date: "yyyy-MM-dd" }}</td>
-        <td>
-          {{ messagePatient.patientPhoneNumber }}
-        </td>
 
         <td>
           <button
@@ -85,7 +80,7 @@
             pRipple
             icon="pi pi-search-plus"
             class="p-button-rounded p-button-prime p-mr-2"
-            [routerLink]="['/dentist/patients', messagePatient.uid]"
+            [routerLink]="['/dentist/patients', messagePatient.messageId]"
           ></button>
           <!-- [routerLink]="['/recipes', id, 'edit']" -->
         </td>

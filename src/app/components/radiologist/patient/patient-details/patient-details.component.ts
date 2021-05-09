@@ -2,7 +2,7 @@ import { RadiologistService } from './../../radiologist.service';
 import { Subscription } from 'rxjs';
 import { PatientService } from './../patient.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Patient } from '../../shared/models/patient.model';
 import { Treatment } from '../../shared/models/treatment.model';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -13,6 +13,7 @@ import { FileUploadService } from './shared/file-upload.service';
 import { MessagePatient } from 'src/app/components/dentist/shared/message-patient.model';
 import { MessagePatientService } from 'src/app/components/dentist/message-patient/message-patient.service';
 import { map } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-patient-details',
@@ -26,7 +27,9 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
     private radiologistService: RadiologistService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private uploadService: FileUploadService
+    private uploadService: FileUploadService,
+    private router: Router,
+    private location: Location
   ) {}
 
   fileName = '';
@@ -63,10 +66,17 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    this.patientService.getPatient(this.id).then((data) => {
-      console.log('this is data from details:', data);
-      this.patientDetails = data;
-    });
+    this.patientService
+      .getPatient(this.id)
+      .then((data) => {
+        console.log('this is data from details:', data);
+        this.patientDetails = data;
+      })
+      .catch((e) => {
+        // this.router.navigate(['..'], { relativeTo: this.route });
+        this.location.back();
+        console.log(e);
+      });
 
     this.radiologistService.getTreatmentTypes().then((response) => {
       this.treatmentTypes = response;

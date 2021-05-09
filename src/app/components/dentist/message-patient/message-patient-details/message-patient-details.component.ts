@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { MessagePatientService } from './../message-patient.service';
@@ -32,11 +32,16 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    this.messagePatientService.getMessage(this.id).then((e) =>
-      e.subscribe((f) => {
-        this.messagePatientDetails = f.data();
-      })
-    );
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      console.log(this.id);
+      this.messagePatientService.getMessage(this.id).then((e) =>
+        e.subscribe((f) => {
+          console.log(f.data());
+          this.messagePatientDetails = f.data();
+        })
+      );
+    });
   }
 
   sendToAIConverter() {

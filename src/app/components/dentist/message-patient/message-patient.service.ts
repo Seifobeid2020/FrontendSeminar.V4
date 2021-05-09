@@ -69,32 +69,30 @@ export class MessagePatientService implements OnInit {
   async getUID() {
     let id;
     await this.auth.onAuthStateChanged((user) => {
+      console.log('this is uid', user.uid);
       id = user.uid;
     });
     return id;
   }
 
-  async getMessages() {
-    let messagesArray = [];
-    await this.auth.onAuthStateChanged((user) => {
-      this.afs
-        .collection('messages', (ref) =>
-          ref.where('receiverId', '==', user.uid).limit(1)
-        )
-        .snapshotChanges()
-        .subscribe((events) => {
-          events.forEach((change: any) => {
-            if (change.type == 'added') {
-              let tempMessage: any = change.payload.doc.data();
-              tempMessage.uid = change.payload.doc.id;
-              // console.log(tempMessage);
-              messagesArray.push(tempMessage);
-            } else if (change.type == 'modified') {
-            }
-          });
-        });
-    });
-    return messagesArray;
+  async getMessages(messageUID) {
+    return await this.afs
+      .collection('messages', (ref) =>
+        ref.where('receiverId', '==', messageUID)
+      )
+      .snapshotChanges();
+
+    // .subscribe((events) => {
+    //   events.forEach((change: any) => {
+    //     if (change.type == 'added') {
+    //       let tempMessage: any = change.payload.doc.data();
+    //       tempMessage.uid = change.payload.doc.id;
+    //       // console.log(tempMessage);
+    //       messagesArray.push(tempMessage);
+    //     } else if (change.type == 'modified') {
+    //     }
+    //   });
+    // });
   }
   async getMessage(messageUID) {
     console.log(messageUID);

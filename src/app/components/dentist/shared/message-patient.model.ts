@@ -11,6 +11,7 @@ export interface MessagePatient {
   sentAt: Date;
   savedInDB?: boolean;
   receiverImage?: string;
+  receiverName?: string;
   patientGender?: string;
   patientAge?: number;
 }

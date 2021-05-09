@@ -24,12 +24,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this.test();
+
     // this.userId = await this.messagePatientService.getUID();
     this.messagesArray = [];
     await this.auth.onAuthStateChanged((user) => {
       this.sub = this.afs
         .collection('messages', (ref) =>
-          ref.where('receiverId', '==', user.uid).limit(1)
+          ref.where('receiverId', '==', user.uid)
         )
         .snapshotChanges()
         .subscribe((events) => {
@@ -93,5 +95,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
   onClickNotiction() {
     this.showBox = !this.showBox;
+  }
+
+  test() {
+    var arr1 = [
+      { wow: 1, sss: 1 },
+      { wow: 2, sss: 2 },
+      { wow: 3, sss: 3 },
+    ];
+    var arr2 = [
+      { lol: 1, php: 1 },
+      { lol: 2, php: 2 },
+      { lol: 3, php: 3 },
+    ];
+
+    var arr3 = [...arr1];
+    arr3 = [...arr1, ...arr3];
+    console.log('this is arr3 :', arr3);
   }
 }

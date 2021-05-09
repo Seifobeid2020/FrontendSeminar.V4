@@ -95,13 +95,14 @@ export class RadiologistService {
 
   //send treatment to doctor
   async sendToDoctor(id, tretment, patient: Patient) {
-    const userId = await this.auth.currentUser.then((user) => {
-      return user.uid;
+    const userDetails = await this.auth.currentUser.then((user) => {
+      console.log('user deatals: ', user);
+      return user;
     });
     console.log(tretment);
 
     var message: MessagePatient = {
-      senderId: userId,
+      senderId: userDetails.uid,
       receiverId: id,
       receiverImage: tretment.treatmentImageUrl,
       imageType: tretment.treatmentName,
@@ -114,6 +115,7 @@ export class RadiologistService {
       seen: false,
       sentAt: new Date(),
       savedInDB: false,
+      receiverName: userDetails.displayName,
     };
 
     this.afs
