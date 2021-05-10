@@ -1,86 +1,60 @@
-import { Injectable, NgZone } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/firestore';
-
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { User } from '../shared/services/user';
+import firebase from 'firebase/app';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   userData: any; // Save logged in user data
+  idToken: string;
 
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
-    public ngZone: NgZone // NgZone service to remove outside scope warning
+    private cookieService: CookieService,
+    private http: HttpClient // NgZone service to remove outside scope warning
   ) {
+    const cookieExists: boolean = this.cookieService.check('__session');
+    console.log(cookieExists);
+    if (cookieExists) {
+      this.idToken = this.cookieService.get('__session');
+      this.http
+        .get<{ token: string }>(
+          'https://us-central1-drradauthpay.cloudfunctions.net/generateCustomToken',
+          {
+            params: new HttpParams().append('idToken', this.idToken),
+          }
+        )
+        .subscribe((res) => {
+          this.afAuth.signInWithCustomToken(res.token).then((userCred) => {
+            console.log('User is signed in');
+          });
+        });
+    } else {
+      window.location.href = 'http://localhost:3000/login';
+    }
     /* Saving user data in localstorage when
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user'));
+        this.getCustomClaimRole().then((role) => {
+          this.userData = { ...this.userData, role };
+          localStorage.setItem('user', JSON.stringify(this.userData));
+          console.log(JSON.parse(localStorage.getItem('user')));
+        });
       } else {
         localStorage.setItem('user', null);
-        JSON.parse(localStorage.getItem('user'));
+        console.log(JSON.parse(localStorage.getItem('user')));
       }
     });
   }
-
-  // Sign in with email/password
-  SignIn(email, password) {
-    // this.auth
-    // .signInWithEmailAndPassword('m3n.ibregeth@gmail.com', 'Maen_1234')
-    // .then((userCred) => {
-    //   this.user = userCred.user;
-    //   // console.log('this is usercred: ', userCred.user);
-    //   this.getCustomClaimRole().then((role) => {
-    //     if (role == 'dentist') {
-    //       this.router.navigate(['/dentist']);
-    //     } else if (role == 'radiologist') {
-    //       this.router.navigate(['/radiologist']);
-    //     }
-    //   });
-
-    //   this.auth.authState.subscribe((user) =>
-    //     console.log(user.displayName)
-    //   );
-    // });
-
-    return this.afAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.ngZone.run((see) => {
-          console.log('this is the result ', result);
-          // this.router.navigate(['rad']);
-        });
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
-  }
-
-  // Sign up with email/password
-  // SignUp(email, password) {
-  //   return this.afAuth
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then((result) => {
-  //       /* Call the SendVerificaitonMail() function when new user sign
-  //       up and returns promise */
-  //       this.SendVerificationMail();
-  //       this.SetUserData(result.user);
-  //     })
-  //     .catch((error) => {
-  //       window.alert(error.message);
-  //     });
-  // }
 
   // Send email verfificaiton when new user sign up
   SendVerificationMail() {
@@ -107,28 +81,24 @@ export class AuthService {
     return user !== null && user.emailVerified !== false ? true : false;
   }
 
-  // Auth logic to run auth providers
-  AuthLogin(provider) {
-    return this.afAuth
-      .signInWithPopup(provider)
-      .then((result) => {
-        this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        });
-      })
-      .catch((error) => {
-        window.alert(error);
-      });
+  getUser() {
+    return JSON.parse(localStorage.getItem('user'));
   }
-
-  /* Setting up user data when sign in with username/password,
-  sign up with username/password and sign in with social auth
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
 
   // Sign out
   SignOut() {
-    return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-    });
+    return this.afAuth
+      .signOut()
+      .then(() => {
+        localStorage.removeItem('user');
+        this.cookieService.delete('__session');
+      })
+      .catch((error) => console.log(error.message));
+  }
+
+  async getCustomClaimRole() {
+    await firebase.auth().currentUser.getIdToken(true);
+    const decodedToken = await firebase.auth().currentUser.getIdTokenResult();
+    return decodedToken.claims.stripeRole;
   }
 }
