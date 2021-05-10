@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-radiologist',
   templateUrl: './radiologist.component.html',
-  styleUrls: ['./radiologist.component.css']
+  styleUrls: ['./radiologist.component.css'],
 })
 export class RadiologistComponent implements OnInit {
   itemsNav: MenuItem[];
   itemsSideNav: MenuItem[];
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.itemsNav = [
@@ -66,6 +67,6 @@ export class RadiologistComponent implements OnInit {
   }
 
   logout() {
-  //  this.authService.signOut();
+    this.authService.SignOut();
   }
 }

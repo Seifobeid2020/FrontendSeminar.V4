@@ -14,11 +14,11 @@ export class AuthService {
   idToken: string;
 
   constructor(
-    public afs: AngularFirestore, // Inject Firestore service
-    public afAuth: AngularFireAuth, // Inject Firebase auth service
+    public afs: AngularFirestore,
+    public afAuth: AngularFireAuth,
     public router: Router,
     private cookieService: CookieService,
-    private http: HttpClient // NgZone service to remove outside scope warning
+    private http: HttpClient
   ) {
     const cookieExists: boolean = this.cookieService.check('__session');
     console.log(cookieExists);
@@ -37,23 +37,41 @@ export class AuthService {
           });
         });
     } else {
-      window.location.href = 'http://localhost:3000/login';
+      window.location.href = 'http://localhost:3000/login.html';
     }
     /* Saving user data in localstorage when
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.userData = user;
+        this.userData = user.toJSON();
         this.getCustomClaimRole().then((role) => {
           this.userData = { ...this.userData, role };
+          console.log(user.toJSON());
           localStorage.setItem('user', JSON.stringify(this.userData));
           console.log(JSON.parse(localStorage.getItem('user')));
+
+          this.redirectUser();
         });
       } else {
         localStorage.setItem('user', null);
         console.log(JSON.parse(localStorage.getItem('user')));
       }
     });
+  }
+
+  redirectUser() {
+    let user = this.getUser();
+    if (user) {
+      if (user.role == 'radiologist') {
+        this.router.navigate(['radiologist']);
+      } else if (user.role == 'dentist') {
+        this.router.navigate(['dentist']);
+      } else {
+        window.location.href = 'http://localhost:3000/login.html';
+      }
+    } else {
+      console.log('User not sigend in');
+    }
   }
 
   // Send email verfificaiton when new user sign up
@@ -87,11 +105,12 @@ export class AuthService {
 
   // Sign out
   SignOut() {
-    return this.afAuth
+    this.afAuth
       .signOut()
       .then(() => {
         localStorage.removeItem('user');
         this.cookieService.delete('__session');
+        window.location.href = 'http://localhost:3000/login.html';
       })
       .catch((error) => console.log(error.message));
   }
@@ -99,6 +118,7 @@ export class AuthService {
   async getCustomClaimRole() {
     await firebase.auth().currentUser.getIdToken(true);
     const decodedToken = await firebase.auth().currentUser.getIdTokenResult();
+    console.log(decodedToken.claims.stripeRole);
     return decodedToken.claims.stripeRole;
   }
 }
