@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { MessagePatientService } from './../message-patient.service';
 import { MessagePatient } from './../../shared/message-patient.model';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-patient-details',
   templateUrl: './message-patient-details.component.html',
@@ -15,7 +16,8 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private messagePatientService: MessagePatientService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private http: HttpClient
   ) {}
 
   sub: Subscription;
@@ -24,7 +26,7 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
 
   messagePatientDetails;
 
-  imageAI;
+  imageAIUrl;
 
   imageAIReceived: boolean = false;
 
@@ -45,9 +47,14 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
   }
 
   sendToAIConverter() {
-    console.log(this.imageAIReceived);
-    this.imageAIReceived = !this.imageAIReceived;
-    console.log(this.imageAIReceived);
+    this.http
+      .post('http://localhost:8000/api/image', {
+        imageURL: this.messagePatientDetails.imageUrl,
+      })
+      .subscribe((result) => {
+        this.imageAIUrl = result;
+        this.imageAIReceived = true;
+      });
   }
   ngOnDestroy() {
     //this.sub.unsubscribe();

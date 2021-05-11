@@ -30,21 +30,14 @@
           <div class="p-col-6 p-offset-3">
             <div class="box">
               <p-progressSpinner
-                *ngIf="imageAI || imageAIReceived"
+                *ngIf="imageAIUrl || imageAIReceived"
               ></p-progressSpinner>
             </div>
           </div>
         </div>
 
-        ​<a
-          [href]="messagePatientDetails.imageUrl"
-          *ngIf="!imageAI && !imageAIReceived"
-        >
-          <img
-            src="{{ messagePatientDetails.imageUrl }}"
-            alt="A image"
-            width="300"
-          />
+        ​<a [href]="imageAIUrl" *ngIf="!imageAIUrl && !imageAIReceived">
+          <img src="{{ imageAIUrl }}" alt="A image" width="300" />
         </a>
       </div>
     </div>
