@@ -37,10 +37,12 @@ export class ExpenseTypeComponent implements OnInit {
         const arr = this.expenseTypes.filter(
           (p) => p.expenseTypeId == response.expenseTypeId
         );
+
         if (arr.length > 0) {
           var indexOfModefied = this.expenseTypes.findIndex(
-            (p) => (p.expenseTypeId = response.expenseTypeId)
+            (p) => p.expenseTypeId == response.expenseTypeId
           );
+
           this.expenseTypes[indexOfModefied] = response;
         } else {
           this.expenseTypes = [response, ...this.expenseTypes];
@@ -50,11 +52,12 @@ export class ExpenseTypeComponent implements OnInit {
   }
   openNew() {
     this.expenseType = {
-      userId: 'maen',
+      userId: null,
       expenseTypeName: '',
     };
     this.submitted = false;
     this.expenseTypeDialog = true;
+    this.isEditMode = false;
   }
 
   editExpenseType(expenseType: ExpenseType) {
@@ -79,6 +82,7 @@ export class ExpenseTypeComponent implements OnInit {
           detail: 'Patient Deleted',
           life: 1500,
         });
+        console.log('this is from delete : ', expenseType);
         this.radiologistService.deleteExpenseType(expenseType.expenseTypeId);
       },
     });
@@ -109,7 +113,7 @@ export class ExpenseTypeComponent implements OnInit {
       this.isEditMode = false;
 
       let newExpenseType: ExpenseType = {
-        userId: 'maen',
+        userId: '',
         expenseTypeName: this.expenseType.expenseTypeName,
       };
       this.radiologistService.craeteExpenseType(newExpenseType);

@@ -40,10 +40,10 @@ export class AdvanceReportComponent implements OnInit {
   balanceStyle(balance) {
     return balance < 0 ? true : false;
   }
-  changeTotalBalance() {
-    if (this.advanceReportTable.filteredValue) {
+  changeTotalBalance(event) {
+    if (event.filteredValue) {
       this.totalAmount = 0;
-      this.advanceReportTable.filteredValue.forEach((report) => {
+      event.filteredValue.forEach((report) => {
         this.totalAmount += report.balance;
       });
     }

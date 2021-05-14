@@ -81,7 +81,7 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
     this.radiologistService.getTreatmentTypes().then((response) => {
       this.treatmentTypes = response;
 
-      this.selectedTreatmentType = this.treatmentTypes[0];
+      this.selectedTreatmentType = { ...this.treatmentTypes[0] };
     });
 
     this.patientService
@@ -132,7 +132,7 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
   }
 
   openNew() {
-    this.treatment = { userId: 'maen', treatmentCost: 0 };
+    this.treatment = { userId: '', treatmentCost: 0 };
     this.submitted = false;
     this.treatmentDialog = true;
   }
@@ -193,7 +193,7 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
       await this.upload().then((fileUpload) => {
         let treatment: Treatment = {
           treatmentId: this.treatment.treatmentId,
-          userId: 'maen',
+          userId: '',
           patientId: this.id,
           treatmentImageUrl: fileUpload.url,
           treatmentImageName: fileUpload.name, // ask seif about it!!!
@@ -219,7 +219,7 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
     else {
       await this.upload().then((fileUpload) => {
         let newTreatment: Treatment = {
-          userId: 'maen',
+          userId: '',
           patientId: this.id,
           treatmentImageUrl: fileUpload.url,
           treatmentImageName: fileUpload.name, // ask seif about it!!!
@@ -248,6 +248,14 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
     this.treatment = { ...treatment };
     this.treatmentDialog = true;
     this.isEditMode = true;
+  }
+  onChangeTreatmentType() {
+    this.treatmentTypes.find((x) => {
+      if (x.name == this.selectedTreatmentType.name) {
+        this.selectedTreatmentType.defaultCost = x.defaultCost;
+        return;
+      }
+    });
   }
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Upload Image %%%%%%%%%%%%%%%%%%%%%%%%%%%

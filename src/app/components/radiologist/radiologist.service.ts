@@ -15,6 +15,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class RadiologistService {
   baseUrl = 'https://localhost:5001/';
+  gatewayBaseUrl = 'https://localhost:5021/gateway/';
 
   treatmentTypeChanged = new Subject<TreatmentType>();
   expenseTypeChanged = new Subject<ExpenseType>();
@@ -157,24 +158,26 @@ export class RadiologistService {
   //Expense Type Service
   editExpenseType(id: number, expenseType: ExpenseType) {
     this.http
-      .put<ExpenseType>(this.baseUrl + `api/ExpenseTypes/${id}`, expenseType)
+      .put<ExpenseType>(this.gatewayBaseUrl + `ExpenseTypes/${id}`, expenseType)
       .subscribe((result) => {
         this.expenseTypeChanged.next(result);
       });
   }
   deleteExpenseType(id: number) {
-    this.http.delete(this.baseUrl + `api/ExpenseTypes/${id}`).subscribe();
+    console.log(id);
+
+    this.http.delete(this.gatewayBaseUrl + `ExpenseTypes/${id}`).subscribe();
   }
   craeteExpenseType(expenseType: ExpenseType): void {
     this.http
-      .post<ExpenseType>(this.baseUrl + 'api/ExpenseTypes/', expenseType)
+      .post<ExpenseType>(this.gatewayBaseUrl + 'ExpenseTypes', expenseType)
       .subscribe((result) => {
         this.expenseTypeChanged.next(result);
       });
   }
   getExpenseType(): Promise<ExpenseType[]> {
     return this.http
-      .get<ExpenseType[]>(this.baseUrl + 'api/ExpenseTypes/')
+      .get<ExpenseType[]>(this.gatewayBaseUrl + 'ExpenseTypes')
       .toPromise()
       .then((data) => {
         return data;
@@ -199,6 +202,7 @@ export class RadiologistService {
       .post<Expense>(this.baseUrl + 'api/Expenses/', expense)
       .subscribe((result) => {
         this.expenseChanged.next(result);
+        console.log('this is result: ', result);
       });
   }
   getExpenses(): Promise<Expense[]> {
@@ -206,6 +210,7 @@ export class RadiologistService {
       .get<Expense[]>(this.baseUrl + 'api/Expenses/')
       .toPromise()
       .then((data) => {
+        console.log('this is data from Expenses:', data);
         return data;
       });
   }

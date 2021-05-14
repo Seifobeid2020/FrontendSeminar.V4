@@ -19,7 +19,7 @@ export class ReportsComponent implements OnInit {
 
   totalAmount: number = 0;
 
-  @ViewChild('reportTable', { static: true }) reportTable;
+  // @ViewChild('reportTable', { static: true }) reportTable;
 
   constructor(private reportService: ReportService) {}
 
@@ -38,12 +38,16 @@ export class ReportsComponent implements OnInit {
   balanceStyle(balance) {
     return balance < 0 ? true : false;
   }
-  changeTotalBalance() {
-    if (this.reportTable.filteredValue) {
+  changeTotalBalance(event) {
+    console.log(event);
+    if (event.filteredValue) {
       this.totalAmount = 0;
-      this.reportTable.filteredValue.forEach((report) => {
+      event.filteredValue.forEach((report) => {
         this.totalAmount += report.balance;
       });
     }
+  }
+  onClean(event) {
+    console.log(event);
   }
 }

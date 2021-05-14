@@ -75,8 +75,9 @@ export class PatientTableComponent implements OnInit, OnDestroy {
       );
       if (arr.length > 0) {
         var indexOfModefied = this.patients.findIndex(
-          (p) => (p.patientId = response.patientId)
+          (p) => p.patientId == response.patientId
         );
+        console.log('thois is is : ', response);
         this.patients[indexOfModefied] = response;
       } else {
         response.totalTreatmentCost = this.selectedTreatmentType.defaultCost;
@@ -85,7 +86,7 @@ export class PatientTableComponent implements OnInit, OnDestroy {
 
         let t: Treatment = {
           patientId: this.newPatientId,
-          userId: 'maen',
+          userId: null,
           treatmentCost: this.selectedTreatmentType.defaultCost,
           treatmentTypeId: this.selectedTreatmentType.treatmentTypeId,
         };
@@ -97,7 +98,7 @@ export class PatientTableComponent implements OnInit, OnDestroy {
 
   openNew() {
     this.patient = {
-      userId: 'maen',
+      userId: '',
       firstName: '',
       lastName: '',
       age: null,
@@ -184,7 +185,7 @@ export class PatientTableComponent implements OnInit, OnDestroy {
       // if add
       else {
         let p: Patient = {
-          userId: 'maen',
+          userId: '',
           firstName: this.patient.firstName,
           lastName: this.patient.lastName,
           age: this.patient.age,

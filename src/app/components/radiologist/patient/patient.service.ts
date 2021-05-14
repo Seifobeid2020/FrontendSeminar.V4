@@ -13,12 +13,13 @@ export class PatientService {
   treatmentsChanged = new Subject<Treatment>();
 
   baseUrl = 'https://localhost:5001/';
+  gatewayBaseUrl = 'https://localhost:5021/gateway/';
 
   constructor(private http: HttpClient) {}
 
   getPatients(): Promise<Patient[]> {
     return this.http
-      .get<Patient[]>(this.baseUrl + 'api/patients')
+      .get<Patient[]>(this.gatewayBaseUrl + 'patients')
       .toPromise()
       .then((data) => {
         return data;
@@ -57,7 +58,7 @@ export class PatientService {
 
   createPatient(patient: Patient): void {
     this.http
-      .post<Patient>(this.baseUrl + 'api/patients', patient)
+      .post<Patient>(this.gatewayBaseUrl + 'patients', patient)
       .subscribe((result) => {
         this.patientsChanged.next(result);
       });

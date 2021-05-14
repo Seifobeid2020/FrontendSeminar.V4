@@ -41,7 +41,7 @@ export class TreatmentTypeComponent implements OnInit {
         );
         if (arr.length > 0) {
           var indexOfModefied = this.treatmentTypes.findIndex(
-            (p) => (p.treatmentTypeId = response.treatmentTypeId)
+            (p) => p.treatmentTypeId == response.treatmentTypeId
           );
           this.treatmentTypes[indexOfModefied] = response;
         } else {
@@ -52,12 +52,13 @@ export class TreatmentTypeComponent implements OnInit {
   }
   openNew() {
     this.treatmentType = {
-      userId: 'maen',
+      userId: '',
       name: '',
       defaultCost: 0,
     };
     this.submitted = false;
     this.treatmentTypeDialog = true;
+    this.isEditMode = false;
   }
 
   editTreatmentType(treatmentType: TreatmentType) {
@@ -113,7 +114,7 @@ export class TreatmentTypeComponent implements OnInit {
       this.isEditMode = false;
 
       let newTreatmentType: TreatmentType = {
-        userId: 'maen',
+        userId: '',
         name: this.treatmentType.name,
         defaultCost: this.treatmentType.defaultCost,
       };

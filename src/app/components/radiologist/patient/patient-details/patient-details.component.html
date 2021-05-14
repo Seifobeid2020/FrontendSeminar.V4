@@ -12,15 +12,6 @@
         class="p-button-success p-mr-2"
         (click)="openNew()"
       ></button>
-      <button
-        pButton
-        pRipple
-        [label]="'Delete'"
-        icon="pi pi-trash"
-        class="p-button-danger"
-        (click)="deleteSelectedTreatments()"
-        [disabled]="!selectedTreatments || !selectedTreatments.length"
-      ></button>
     </ng-template>
 
     <!-- <ng-template pTemplate="right">
@@ -71,9 +62,6 @@
   -->
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
         <th pSortableColumn="imageUrl">
           Image <p-sortIcon field="imageUrl"></p-sortIcon>
         </th>
@@ -97,9 +85,6 @@
     <ng-template pTemplate="body" let-treatment>
       <tr>
         <td>
-          <p-tableCheckbox [value]="treatment"></p-tableCheckbox>
-        </td>
-        <td>
           <a [href]="treatment.treatmentImageUrl">
             <img
               [src]="treatment.treatmentImageUrl"
@@ -120,6 +105,7 @@
             icon="pi pi-send"
             class="sendButton p-button-rounded p-button-outlined p-mr-2"
             (click)="openDialogSendTreatmentToDoctor(treatment)"
+            *ngIf="treatment.treatmentImageUrl"
           ></button>
 
           <button
@@ -176,6 +162,7 @@
       optionValue="name"
       [showClear]="true"
       [disabled]="isEditMode"
+      (onChange)="onChangeTreatmentType()"
     ></p-dropdown>
   </div>
 

@@ -174,7 +174,13 @@
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  background: #bec7c6;
+  background: rgb(168, 168, 168);
+  background: radial-gradient(
+    circle,
+    rgba(168, 168, 168, 1) 0%,
+    rgba(96, 91, 91, 1) 76%
+  );
+  border-radius: 50px;
 }
 .container-fluid {
   width: 100%;

@@ -1,3 +1,5 @@
+{{ isEditMode }}
+
 <div class="p-shadow-5 container">
   <p-toast></p-toast>
 
@@ -12,15 +14,6 @@
           icon="pi pi-plus"
           class="p-button-success p-mr-2"
           (click)="openNew()"
-        ></button>
-        <button
-          pButton
-          pRipple
-          [label]="'Delete'"
-          icon="pi pi-trash"
-          class="p-button-danger"
-          (click)="deleteSelectedExpenses()"
-          [disabled]="!selectedExpenses || !selectedExpenses.length"
         ></button>
       </ng-template>
 
@@ -53,7 +46,12 @@
       [value]="expenses"
       [rows]="10"
       [paginator]="true"
-      [globalFilterFields]="['firstName', 'lastName']"
+      [globalFilterFields]="[
+        'expenseTypeName',
+        'expenseValue',
+        'createdAt',
+        'expenseDescription'
+      ]"
       [(selection)]="selectedExpenses"
       [rowHover]="true"
       dataKey="id"
@@ -88,9 +86,6 @@
   -->
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 3rem">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-          </th>
           <th pSortableColumn="expenseTypeName">
             Expense Type Name <p-sortIcon field="expenseTypeName"></p-sortIcon>
           </th>
@@ -115,9 +110,6 @@
   -->
       <ng-template pTemplate="body" let-expense>
         <tr>
-          <td>
-            <p-tableCheckbox [value]="expense"></p-tableCheckbox>
-          </td>
           <td>{{ expense.expenseType.expenseTypeName }}</td>
           <td>
             {{ expense.expenseValue | currency: "USD" }}

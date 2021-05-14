@@ -57,7 +57,7 @@ export class ExpenseComponent implements OnInit {
       if (arr.length > 0) {
         console.log('we came in ' + JSON.stringify(response));
         var indexOfModefied = this.expenses.findIndex(
-          (p) => (p.expenseId = response.expenseId)
+          (p) => p.expenseId == response.expenseId
         );
         this.expenses[indexOfModefied] = response;
       } else {
@@ -85,7 +85,7 @@ export class ExpenseComponent implements OnInit {
 
   openNew() {
     this.expense = {
-      userId: 'maen',
+      userId: '',
       expenseDescription: '',
       expenseValue: 0,
     };
@@ -189,7 +189,7 @@ export class ExpenseComponent implements OnInit {
       console.log('Hiii from add!!');
       // console.log(this.selectedExpenseType.expenseTypeId);
       let newExpense: Expense = {
-        userId: 'maen',
+        userId: '',
         expenseDescription: this.expense.expenseDescription,
         expenseValue: this.expense.expenseValue,
         expenseTypeId: this.selectedExpenseTypeNumber,

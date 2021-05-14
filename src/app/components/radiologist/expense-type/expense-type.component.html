@@ -1,3 +1,5 @@
+{{ isEditMode }}
+
 <div class="p-shadow-5 container">
   <p-toast></p-toast>
 
@@ -13,27 +15,7 @@
           class="p-button-success p-mr-2"
           (click)="openNew()"
         ></button>
-        <!-- <button
-        pButton
-        pRipple
-        [label]="'Delete'"
-        icon="pi pi-trash"
-        class="p-button-danger"
-        (click)="deleteSelectedTreatments()"
-        [disabled]="!selectedTreatments || !selectedTreatments.length"
-      ></button> -->
       </ng-template>
-
-      <!-- <ng-template pTemplate="right">
-      <p-fileUpload
-        mode="basic"
-        accept="image/*"
-        [maxFileSize]="1000000"
-        label="Import"
-        chooseLabel="Import"
-        class="p-mr-2 p-d-inline-block"
-      ></p-fileUpload>
-    </ng-template> -->
     </p-toolbar>
 
     <p-table
@@ -41,7 +23,7 @@
       [value]="expenseTypes"
       [rows]="10"
       [paginator]="true"
-      [globalFilterFields]="['name']"
+      [globalFilterFields]="['expenseTypeName']"
       [rowHover]="true"
       dataKey="id"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -71,9 +53,6 @@
   -->
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 3rem">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-          </th>
           <th pSortableColumn="expenseTypeName">
             expense Type Name <p-sortIcon field="expenseTypeName"></p-sortIcon>
           </th>
@@ -87,10 +66,6 @@
   -->
       <ng-template pTemplate="body" let-expenseType>
         <tr>
-          <td>
-            <p-tableCheckbox [value]="expenseType"></p-tableCheckbox>
-          </td>
-
           <td>{{ expenseType.expenseTypeName }}</td>
 
           <td>
