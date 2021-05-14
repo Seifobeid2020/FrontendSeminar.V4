@@ -29,16 +29,17 @@
         <div class="p-grid">
           <div class="p-col-6 p-offset-3">
             <div class="box">
-              <p-progressSpinner
-                *ngIf="imageAIUrl || imageAIReceived"
-              ></p-progressSpinner>
+              <p-progressSpinner *ngIf="showSpinner"></p-progressSpinner>
             </div>
           </div>
         </div>
-
-        ​<a [href]="imageAIUrl" *ngIf="!imageAIUrl && !imageAIReceived">
-          <img src="{{ imageAIUrl }}" alt="A image" width="300" />
-        </a>
+        <img
+          *ngIf="imageAIUrl && imageAIReceived"
+          src="{{ imageAIUrl }}"
+          alt="A image"
+          width="300"
+          #myImg
+        />
       </div>
     </div>
   </div>

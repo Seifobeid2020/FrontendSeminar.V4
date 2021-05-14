@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
@@ -30,6 +30,8 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
 
   imageAIReceived: boolean = false;
 
+  showSpinner: boolean = false;
+
   //send items
 
   ngOnInit(): void {
@@ -47,13 +49,16 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
   }
 
   sendToAIConverter() {
+    this.showSpinner = true;
     this.http
-      .post('http://localhost:8000/api/image', {
+      .post('http://localhost:8000/api/image/', {
         imageURL: this.messagePatientDetails.imageUrl,
       })
       .subscribe((result) => {
+        console.log(result);
         this.imageAIUrl = result;
         this.imageAIReceived = true;
+        this.showSpinner = false;
       });
   }
   ngOnDestroy() {
