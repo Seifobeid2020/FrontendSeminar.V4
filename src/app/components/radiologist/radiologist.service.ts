@@ -129,7 +129,7 @@ export class RadiologistService {
   editTreatmentType(id: number, treatmentType: TreatmentType) {
     this.http
       .put<TreatmentType>(
-        this.baseUrl + `api/TreatmentTypes/${id}`,
+        this.gatewayBaseUrl + `TreatmentTypes/${id}`,
         treatmentType
       )
       .subscribe((result) => {
@@ -137,18 +137,21 @@ export class RadiologistService {
       });
   }
   deleteTreatmentType(id: number) {
-    this.http.delete(this.baseUrl + `api/TreatmentTypes/${id}`).subscribe();
+    this.http.delete(this.gatewayBaseUrl + `TreatmentTypes/${id}`).subscribe();
   }
   craeteTreatmentType(treatmentType: TreatmentType): void {
     this.http
-      .post<TreatmentType>(this.baseUrl + 'api/TreatmentTypes/', treatmentType)
+      .post<TreatmentType>(
+        this.gatewayBaseUrl + 'TreatmentTypes',
+        treatmentType
+      )
       .subscribe((result) => {
         this.treatmentTypeChanged.next(result);
       });
   }
   getTreatmentTypes(): Promise<TreatmentType[]> {
     return this.http
-      .get<TreatmentType[]>(this.baseUrl + 'api/TreatmentTypes/')
+      .get<TreatmentType[]>(this.gatewayBaseUrl + 'TreatmentTypes')
       .toPromise()
       .then((data) => {
         return data;
@@ -188,18 +191,18 @@ export class RadiologistService {
   editExpense(id: number, expense: Expense) {
     console.log('from service ', expense);
     this.http
-      .put<Expense>(this.baseUrl + `api/Expenses/${id}`, expense)
+      .put<Expense>(this.gatewayBaseUrl + `Expenses/${id}`, expense)
       .subscribe((result) => {
         this.expenseChanged.next(result);
       });
   }
   deleteExpense(id: number) {
-    this.http.delete(this.baseUrl + `api/Expenses/${id}`).subscribe();
+    this.http.delete(this.gatewayBaseUrl + `Expenses/${id}`).subscribe();
   }
   craeteExpense(expense: Expense): void {
     console.log(expense);
     this.http
-      .post<Expense>(this.baseUrl + 'api/Expenses/', expense)
+      .post<Expense>(this.gatewayBaseUrl + 'Expenses', expense)
       .subscribe((result) => {
         this.expenseChanged.next(result);
         console.log('this is result: ', result);
@@ -207,7 +210,7 @@ export class RadiologistService {
   }
   getExpenses(): Promise<Expense[]> {
     return this.http
-      .get<Expense[]>(this.baseUrl + 'api/Expenses/')
+      .get<Expense[]>(this.gatewayBaseUrl + 'Expenses')
       .toPromise()
       .then((data) => {
         console.log('this is data from Expenses:', data);

@@ -12,7 +12,7 @@ export class PatientService {
   patientsChanged = new Subject<Patient>();
   treatmentsChanged = new Subject<Treatment>();
 
-  baseUrl = 'https://localhost:5001/';
+  // baseUrl = 'https://localhost:5001/';
   gatewayBaseUrl = 'https://localhost:5021/gateway/';
 
   constructor(private http: HttpClient) {}
@@ -28,33 +28,37 @@ export class PatientService {
 
   getPatient(id: number): Promise<Patient> {
     return this.http
-      .get<Patient>(this.baseUrl + `api/patients/${id}`)
+      .get<Patient>(this.gatewayBaseUrl + `patients/${id}`)
       .toPromise()
       .then((data) => {
         return data;
       });
   }
-
-  getTreatments(patientId: number) {
-    return this.http
-      .get<Treatment[]>(this.baseUrl + `api/treatments/patient/${patientId}`)
-      .toPromise()
-      .then((data) => data);
-  }
-
-  getTreatmentsTotalCost(patientId: number): number {
-    let totalCost = 0;
+  editPatient(id: number, patient: Patient) {
     this.http
-      .get<{ value: number }>(
-        this.baseUrl + `api/treatments/patient/${patientId}/totalcost`
-      )
-      .toPromise()
-      .then((data) => {
-        totalCost = data.value;
+      .put<Patient>(this.gatewayBaseUrl + `patients/${id}`, patient)
+      .subscribe((result) => {
+        console.log(result);
+        this.patientsChanged.next(result);
       });
-
-    return totalCost;
   }
+  deletePatient(id: number) {
+    this.http.delete(this.gatewayBaseUrl + `patients/${id}`).subscribe();
+  }
+
+  // getTreatmentsTotalCost(patientId: number): number {
+  //   let totalCost = 0;
+  //   this.http
+  //     .get<{ value: number }>(
+  //       this.baseUrl + `api/treatments/patient/${patientId}/totalcost`
+  //     )
+  //     .toPromise()
+  //     .then((data) => {
+  //       totalCost = data.value;
+  //     });
+
+  //   return totalCost;
+  // }
 
   createPatient(patient: Patient): void {
     this.http
@@ -64,37 +68,31 @@ export class PatientService {
       });
   }
 
-  craeteTreatment(treatment: Treatment): void {
-    this.http
-      .post<Treatment>(this.baseUrl + 'api/treatments', treatment)
-      .subscribe((result) => {
-        this.treatmentsChanged.next(result);
-      });
+  getTreatments(patientId: number) {
+    return this.http
+      .get<Treatment[]>(this.gatewayBaseUrl + `treatments/patient/${patientId}`)
+      .toPromise()
+      .then((data) => data);
   }
 
-  editPatient(id: number, patient: Patient) {
+  craeteTreatment(treatment: Treatment): void {
     this.http
-      .put<Patient>(this.baseUrl + `api/patients/${id}`, patient)
+      .post<Treatment>(this.gatewayBaseUrl + 'treatments', treatment)
       .subscribe((result) => {
-        console.log(result);
-        this.patientsChanged.next(result);
+        this.treatmentsChanged.next(result);
       });
   }
 
   editTreatment(id: number, treatment: Treatment) {
     console.log(treatment);
     this.http
-      .put<Treatment>(this.baseUrl + `api/treatments/${id}`, treatment)
+      .put<Treatment>(this.gatewayBaseUrl + `treatments/${id}`, treatment)
       .subscribe((result) => {
         this.treatmentsChanged.next(result);
       });
   }
 
-  deletePatient(id: number) {
-    this.http.delete(this.baseUrl + `api/patients/${id}`).subscribe();
-  }
-
   deleteTreatment(id: number) {
-    this.http.delete(this.baseUrl + `api/treatments/${id}`).subscribe();
+    this.http.delete(this.gatewayBaseUrl + `treatments/${id}`).subscribe();
   }
 }
