@@ -32,6 +32,7 @@ import { MessagePatientComponent } from './message-patient.component';
 import { MessagePatientTableComponent } from './message-patient-table/message-patient-table.component';
 import { MessagePatientDetailsComponent } from './message-patient-details/message-patient-details.component';
 import { FieldsetModule } from 'primeng/fieldset';
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { FieldsetModule } from 'primeng/fieldset';
     RouterModule,
     ProgressSpinnerModule,
     FieldsetModule,
+    NgImageFullscreenViewModule,
   ],
 
   providers: [MessageService, ConfirmationService],

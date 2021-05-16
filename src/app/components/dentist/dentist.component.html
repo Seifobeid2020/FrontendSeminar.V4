@@ -1,6 +1,6 @@
 <p-menubar [model]="itemsNav" styleClass="menubar">
   <ng-template pTemplate="end">
-    <div>
+    <div style="display: inline">
       <a
         class="pi pi-bell p-mr-4 p-text-secondary noti-a-tag"
         style="font-size: 2rem"
@@ -93,15 +93,14 @@
           </div>
         </div>
       </div>
+      <button
+        type="button"
+        pButton
+        label="Logout"
+        icon="pi pi-sign-out"
+        (click)="logout()"
+      ></button>
     </div>
-
-    <!-- <button
-      type="button"
-      pButton
-      label="Logout"
-      icon="pi pi-sign-out"
-      (click)="logout()"
-    ></button> -->
   </ng-template>
 </p-menubar>
 

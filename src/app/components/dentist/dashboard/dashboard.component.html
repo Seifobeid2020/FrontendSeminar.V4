@@ -1,1 +1,11 @@
+<div class="group-2">
+  <div>
+    <img [src]="imageObject[0].image" (click)="showLightbox(0)" />
+  </div>
+</div>
 
+<ng-image-fullscreen-view
+  [images]="imageObject"
+  [show]="showFlag"
+  (close)="closeEventHandler()"
+></ng-image-fullscreen-view>

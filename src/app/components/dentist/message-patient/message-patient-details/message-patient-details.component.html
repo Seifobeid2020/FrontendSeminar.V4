@@ -2,14 +2,19 @@
   <div class="p-col-9">
     <div class="p-grid p-jc-between">
       <div class="p-col-4 p-as-center">
-        ​<a [href]="messagePatientDetails.imageUrl">
-          <img
-            [src]="messagePatientDetails.imageUrl"
-            [alt]="messagePatientDetails.imageUrl"
-            width="300"
-          />
-        </a>
+        <img
+          [src]="messagePatientDetails.imageUrl"
+          [alt]="messagePatientDetails.imageUrl"
+          width="300"
+          (click)="showLightbox(0)"
+        />
       </div>
+      <ng-image-fullscreen-view
+        [images]="imageObject"
+        [show]="showFlag"
+        (close)="closeEventHandler()"
+      ></ng-image-fullscreen-view>
+
       <div class="p-col-4 p-as-center">
         <div class="p-grid">
           <div class="p-col-6 p-offset-3">

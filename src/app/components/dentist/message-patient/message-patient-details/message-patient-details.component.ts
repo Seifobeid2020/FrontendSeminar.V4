@@ -32,6 +32,13 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
 
   showSpinner: boolean = false;
 
+  imageObject: Array<any> = [
+    {
+      image: '',
+      thumbImage: '',
+      title: 'Hummingbirds are amazing creatures',
+    },
+  ];
   //send items
 
   ngOnInit(): void {
@@ -43,6 +50,8 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
         e.subscribe((f) => {
           console.log(f.data());
           this.messagePatientDetails = f.data();
+          this.imageObject[0].image = this.messagePatientDetails.imageUrl;
+          this.imageObject[0].thumbImage = this.messagePatientDetails.imageUrl;
         })
       );
     });
@@ -54,7 +63,7 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
       .post('http://localhost:8000/api/image/', {
         imageURL: this.messagePatientDetails.imageUrl,
       })
-      .subscribe((result) => {
+      .subscribe((result: any) => {
         console.log(result);
         this.imageAIUrl = result;
         this.imageAIReceived = true;
@@ -63,5 +72,20 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     //this.sub.unsubscribe();
+  }
+
+  showFlag: boolean = false;
+  selectedImageIndex: number = -1;
+
+  currentIndex: any = -1;
+
+  showLightbox(index) {
+    this.currentIndex = index;
+    this.showFlag = true;
+  }
+
+  closeEventHandler() {
+    this.showFlag = false;
+    this.currentIndex = -1;
   }
 }

@@ -10,8 +10,8 @@ import { DentistComponent } from './dentist.component';
 import { DentistRoutingModule } from './dentist-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BadgeModule } from 'primeng/badge';
-import { TieredMenuModule } from 'primeng/tieredmenu';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
+
 import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
@@ -27,6 +27,7 @@ import { ClickOutsideModule } from 'ng-click-outside';
     SharedModule,
     BadgeModule,
     ClickOutsideModule,
+    NgImageFullscreenViewModule,
   ],
 
   providers: [MessagePatientService],

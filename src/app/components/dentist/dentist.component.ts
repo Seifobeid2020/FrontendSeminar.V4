@@ -1,3 +1,4 @@
+import { AuthService } from './../auth.service';
 import { Observable, Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -28,7 +29,8 @@ export class DentistComponent implements OnInit, OnDestroy {
     private auth: AngularFireAuth,
     private messageService: MessagePatientService,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   async ngOnInit() {
@@ -70,10 +72,12 @@ export class DentistComponent implements OnInit, OnDestroy {
 
           let keys = ['messageId'],
             filtered = this.messagesArray.filter(
-              ((s) => (o) =>
-                ((k) => !s.has(k) && s.add(k))(
-                  keys.map((k) => o[k]).join('|')
-                ))(new Set())
+              (
+                (s) => (o) =>
+                  ((k) => !s.has(k) && s.add(k))(
+                    keys.map((k) => o[k]).join('|')
+                  )
+              )(new Set())
             );
           this.messagesArray = filtered.sort((a, b) => {
             return b.sentAt - a.sentAt;
@@ -102,7 +106,9 @@ export class DentistComponent implements OnInit, OnDestroy {
     });
   }
 
-  logout() {}
+  logout() {
+    this.authService.SignOut();
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
