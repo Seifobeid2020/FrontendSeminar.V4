@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./layout.component.css'],
 })
 export class LayoutComponent {
-  constructor(private authServie: AuthService) {}
+  constructor() {}
 
   ngOnInit() {}
 }

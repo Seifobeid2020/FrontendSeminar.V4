@@ -7,11 +7,9 @@ import { PageNotFoundComponent } from 'src/shared/page-not-found/page-not-found.
 const appRoutes: Routes = [
   {
     path: '',
-    // canActivate: [OktaAuthGuard],
     loadChildren: () =>
       import('./components/layout.module').then((m) => m.LayoutModule),
   },
-  //
 
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' },

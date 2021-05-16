@@ -1,11 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  OidcClientNotification,
-  OidcSecurityService,
-  PublicConfiguration,
-} from 'angular-auth-oidc-client';
-import { Observable } from 'rxjs';
-import { HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './components/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,30 +8,8 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   title = 'form-primeng';
-  // constructor(public oidcSecurityService: OidcSecurityService) {}
-  constructor() {}
 
-  ngOnInit() {
-    // this.oidcSecurityService
-    //   .checkAuth()
-    //   .subscribe((auth) => console.log('is authenticated', auth));
-  }
+  constructor(private authServie: AuthService) {}
 
-  // login() {
-  //   this.oidcSecurityService.authorize();
-  // }
-
-  // logout() {
-  //   this.oidcSecurityService.logoff();
-  // }
-
-  // clickMe() {
-  //   const token = this.oidcSecurityService.getToken();
-
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       Authorization: 'Bearer ' + token,
-  //     }),
-  //   };
-  // }
+  ngOnInit() {}
 }

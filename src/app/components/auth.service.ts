@@ -20,8 +20,8 @@ export class AuthService {
     private cookieService: CookieService,
     private http: HttpClient
   ) {
+    console.log('Hello from auth constructor!!!!');
     const cookieExists: boolean = this.cookieService.check('__session');
-    console.log(cookieExists);
     if (cookieExists) {
       this.idToken = this.cookieService.get('__session');
       this.http
@@ -32,12 +32,8 @@ export class AuthService {
           }
         )
         .subscribe((res) => {
-          this.afAuth.signInWithCustomToken(res.token).then((userCred) => {
-            console.log('User is signed in');
-          });
+          this.afAuth.signInWithCustomToken(res.token);
         });
-    } else {
-      window.location.href = 'http://localhost:3000/login.html';
     }
     /* Saving user data in localstorage when
     logged in and setting up null when logged out */
@@ -46,10 +42,7 @@ export class AuthService {
         this.userData = user.toJSON();
         this.getCustomClaimRole().then((role) => {
           this.userData = { ...this.userData, role };
-          console.log(user.toJSON());
           localStorage.setItem('user', JSON.stringify(this.userData));
-          console.log(JSON.parse(localStorage.getItem('user')));
-
           this.redirectUser();
         });
       } else {
