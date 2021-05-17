@@ -24,15 +24,12 @@ const isDentist = () =>
 
 const redirectLoggedInToItems = () => redirectLoggedInTo(['']);
 
-const redirectUnauthorizedToLogin = () =>
-  pipe(delay(2000), redirectUnauthorizedTo(['login']));
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
 
     children: [
       {

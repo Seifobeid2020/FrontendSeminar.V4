@@ -1,26 +1,86 @@
-<p-menubar [model]="itemsNav">
+<p-menubar>
   <ng-template pTemplate="end">
-    <button
-      type="button"
-      pButton
-      label="Logout"
-      icon="pi pi-sign-out"
-      (click)="logout()"
-    ></button>
+    <img
+      src="/assets/images/default-user-image.png"
+      alt="profile image"
+      class="profile-image"
+    />
   </ng-template>
 </p-menubar>
-
-<div class="sidenav">
-  <p-panelMenu
-    [model]="itemsSideNav"
-    [style]="{ width: '100%', height: '100%' }"
-  ></p-panelMenu>
+<div class="sidenav-wrapper">
+  <div class="sidenav">
+    <p-panelMenu [model]="itemsSideNav"></p-panelMenu>
+  </div>
 </div>
 
+<!-- <div
+  class="dropdown-menu dropdown-menu-right animated fadeIn"
+  (clickOutside)="onClickedOutside($event)"
+  *ngIf="showBox"
+>
+  <div class="notification-continare">
+    <h3>Earlier Notifications</h3>
+    <ul class="ul-main">
+      <div *ngFor="let message of messagesArray; index as i">
+        <li
+          *ngIf="i < 6"
+          class="message-item"
+          (click)="onMessagePatientNotifictionClick(message)"
+        >
+          <div class="p-grid">
+            <div class="p-col-2">
+              <a [href]="message.imageUrl">
+                <img
+                  [src]="message.imageUrl"
+                  [alt]="message.imageType"
+                  style="
+                    height: 56px;
+                    width: 56px;
+                    border-radius: 50%;
+                    margin: 5px;
+                    padding: 5px;
+                  "
+                />
+              </a>
+            </div>
+            <div class="p-col-9">
+              <span>
+                <b>
+                  {{
+                    message.receiverName ? message.receiverName : "UnKnown"
+                  }}</b
+                >
+              </span>
+              Send to you New Patient
+              <span
+                ><b> {{ message.patientName }}. </b>
+              </span>
+              <br />
+              <span
+                class="date-time"
+                [ngStyle]="{
+                  color: !message.seen ? '#2e89ff' : '#303338'
+                }"
+              >
+                {{ message.sentAt.toDate() | date: "MMM d, y, h:mm a" }}</span
+              >
+            </div>
+            <div class="p-col-1 center-circle" *ngIf="!message.seen">
+              <div class="seen-circle"></div>
+            </div>
+          </div>
+        </li>
+      </div>
+    </ul>
+    <div class="see-all-contianer">
+      <a class="see-all" [routerLink]="['patients']" (click)="seeAllHide()"
+        >See All Notifications</a
+      >
+    </div>
+  </div>
+</div> -->
 <div class="content-wrapper">
-  <!-- <div class="p-shadow-5 container"> -->
   <div class="container-fluid">
     <router-outlet></router-outlet>
   </div>
-  <!-- </div> -->
 </div>

@@ -19,38 +19,9 @@ export class AuthService {
     public router: Router,
     private cookieService: CookieService,
     private http: HttpClient
-  ) {
-    console.log('Hello from auth constructor!!!!');
-    const cookieExists: boolean = this.cookieService.check('__session');
-    if (cookieExists) {
-      this.idToken = this.cookieService.get('__session');
-      this.http
-        .get<{ token: string }>(
-          'https://us-central1-drradauthpay.cloudfunctions.net/generateCustomToken',
-          {
-            params: new HttpParams().append('idToken', this.idToken),
-          }
-        )
-        .subscribe((res) => {
-          this.afAuth.signInWithCustomToken(res.token);
-        });
-    }
-    /* Saving user data in localstorage when
-    logged in and setting up null when logged out */
-    this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userData = user.toJSON();
-        this.getCustomClaimRole().then((role) => {
-          this.userData = { ...this.userData, role };
-          localStorage.setItem('user', JSON.stringify(this.userData));
-          this.redirectUser();
-        });
-      } else {
-        localStorage.setItem('user', null);
-        console.log(JSON.parse(localStorage.getItem('user')));
-      }
-    });
-  }
+  ) {}
+
+  init() {}
 
   redirectUser() {
     let user = this.getUser();

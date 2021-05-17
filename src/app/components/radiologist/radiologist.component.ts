@@ -13,38 +13,32 @@ export class RadiologistComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.itemsNav = [
-      {
-        label: '<img />',
-        escape: false,
-        // style: {
-        //   'margin-left': '1000px',
-        // },
-      },
-    ];
-
     this.itemsSideNav = [
       {
         label: 'Dashboard',
         icon: 'pi pi-home',
         routerLink: ['/radiologist'],
+        routerLinkActiveOptions: { exact: true },
       },
 
       {
         label: 'Patients',
         icon: 'pi pi-fw pi-user',
         routerLink: ['/radiologist/patients'],
+        routerLinkActiveOptions: { exact: true },
       },
 
       {
         label: 'Expenses',
         icon: 'pi pi-dollar',
         routerLink: ['/radiologist/expenses'],
+        routerLinkActiveOptions: { exact: true },
       },
       {
         label: 'Reports',
         icon: 'pi pi-chart-line',
         routerLink: ['/radiologist/reports'],
+        routerLinkActiveOptions: { exact: true },
       },
       {
         label: 'Settings',
@@ -55,11 +49,13 @@ export class RadiologistComponent implements OnInit {
             label: ' Treatment Type',
             icon: 'pi pi-plus',
             routerLink: ['/radiologist/treatment-type'],
+            routerLinkActiveOptions: { exact: true },
           },
           {
             label: ' Expense Type',
             icon: 'pi pi-plus',
             routerLink: ['/radiologist/expense-type'],
+            routerLinkActiveOptions: { exact: true },
           },
         ],
       },
