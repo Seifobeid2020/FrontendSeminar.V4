@@ -43,15 +43,13 @@
           patient Name <p-sortIcon field="patientName"></p-sortIcon>
         </th>
         <th pSortableColumn="patientPhoneNumber">
-          patient Phone Number<p-sortIcon
-            field="patientPhoneNumber"
-          ></p-sortIcon>
+          patient Phone <p-sortIcon field="patientPhoneNumber"></p-sortIcon>
         </th>
         <th pSortableColumn="imageType">
-          imageType <p-sortIcon field="imageType"></p-sortIcon>
+          Image Type <p-sortIcon field="imageType"></p-sortIcon>
         </th>
         <th pSortableColumn="receiverName">
-          receiver Name <p-sortIcon field="receiverName"></p-sortIcon>
+          Sender Name <p-sortIcon field="receiverName"></p-sortIcon>
         </th>
 
         <th pSortableColumn="sentAt">
@@ -71,7 +69,7 @@
 
         <td>{{ messagePatient.patientPhoneNumber }}</td>
         <td>{{ messagePatient.imageType }}</td>
-        <td>{{ messagePatient.receiverName }}</td>
+        <td>{{ messagePatient.senderName }}</td>
         <td>{{ messagePatient.sentAt.toDate() | date: "yyyy-MM-dd" }}</td>
 
         <td>

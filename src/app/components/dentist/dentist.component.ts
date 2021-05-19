@@ -19,12 +19,13 @@ export class DentistComponent implements OnInit, OnDestroy {
   itemsNav: MenuItem[];
   itemsSideNav: MenuItem[];
   messages: MessagePatient[];
+  showAccountSettings: boolean = false;
   // first = true;
   //messages
   messagesArray = [];
   showBox = false;
   numOfNotifictions = 0;
-
+  userData;
   constructor(
     private auth: AngularFireAuth,
     private messageService: MessagePatientService,
@@ -34,17 +35,20 @@ export class DentistComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
+    this.userData = this.authService.getUser();
     this.itemsSideNav = [
       {
         label: 'Dashboard',
         icon: 'pi pi-home',
         routerLink: ['/dentist'],
+        routerLinkActiveOptions: { exact: true },
       },
 
       {
         label: 'Patients',
         icon: 'pi pi-fw pi-user',
         routerLink: ['/dentist/patients'],
+        routerLinkActiveOptions: { exact: true },
       },
     ];
     this.messagesArray = [];
@@ -115,6 +119,7 @@ export class DentistComponent implements OnInit, OnDestroy {
   }
 
   onClickedOutside(event) {
+    console.log('object');
     var target = event.target || event.srcElement || event.currentTarget;
     var idAttr = target.attributes.id;
 
@@ -148,5 +153,28 @@ export class DentistComponent implements OnInit, OnDestroy {
 
     this.router.navigate(['dentist/patients', message.messageId]);
     this.showBox = false;
+  }
+  onClickUserProfile() {
+    this.showAccountSettings = !this.showAccountSettings;
+  }
+  async onClickUserAccount() {
+    const functionRef = firebase
+      .app()
+      .functions('us-central1')
+      .httpsCallable('ext-firestore-stripe-subscriptions-createPortalLink');
+    const { data } = await functionRef({ returnUrl: window.location.origin });
+    window.location.assign(data.url);
+  }
+  onClickedOutsideProfile(event) {
+    var target = event.target || event.srcElement || event.currentTarget;
+    var idAttr = target.attributes.id;
+
+    if (idAttr != null) {
+      if (idAttr.value == 'accountSettings') {
+        return;
+      }
+    }
+
+    this.showAccountSettings = false;
   }
 }

@@ -1,11 +1,47 @@
-<div class="group-2">
-  <div>
-    <img [src]="imageObject[0].image" (click)="showLightbox(0)" />
+<p-galleria
+  [(value)]="images"
+  [responsiveOptions]="responsiveOptions"
+  [containerStyle]="{ 'max-width': '640px' }"
+  [numVisible]="5"
+  [circular]="true"
+  [autoPlay]="true"
+  [transitionInterval]="2000"
+>
+  <ng-template pTemplate="item" let-item>
+    <img [src]="item.previewImageSrc" style="width: 100%; display: block" />
+  </ng-template>
+  <ng-template pTemplate="thumbnail" let-item>
+    <div class="p-grid p-nogutter p-justify-center">
+      <img [src]="item.thumbnailImageSrc" style="display: block" />
+    </div>
+  </ng-template>
+</p-galleria>
+<!-- <div class="p-grid mt-4">
+  <div class="p-col-12 p-lg-12 p-xl-12">
+    <div class="card">
+      <div class="card-header">Last 5 Patients</div>
+      <div class="card-body">
+        <p-table [value]="topFiveRad">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Phone Number</th>
+              <th>Visit Date</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-patient>
+            <tr>
+              <td>{{ patient.fullName }}</td>
+              <td>{{ patient.age }}</td>
+              <td>{{ patient.gender == 1 ? "Male" : "Female" }}</td>
+              <td>{{ patient.phoneNumber }}</td>
+              <td>{{ patient.createdAt | date: "yyyy-MM-dd" }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
   </div>
-</div>
-
-<ng-image-fullscreen-view
-  [images]="imageObject"
-  [show]="showFlag"
-  (close)="closeEventHandler()"
-></ng-image-fullscreen-view>
+</div> -->

@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ExpenseTypeComponent } from './expense-type/expense-type.component';
 import { RadiologistComponent } from './radiologist.component';
 import { AdvanceReportComponent } from './reports/advance-report/advance-report.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: 'treatment-type',
         component: TreatmentTypeComponent,
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
       },
     ],
   },

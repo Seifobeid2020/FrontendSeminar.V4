@@ -1,5 +1,5 @@
 <div class="p-grid" *ngIf="messagePatientDetails">
-  <div class="p-col-9">
+  <div class="p-col-8">
     <div class="p-grid p-jc-between">
       <div class="p-col-4 p-as-center">
         <img
@@ -48,7 +48,7 @@
       </div>
     </div>
   </div>
-  <div class="p-col-3">
+  <div class="p-col-4">
     <p-fieldset legend="About">
       <div class="p-d-flex p-flex-column">
         <div class="p-mb-1">
@@ -76,6 +76,14 @@
         <div class="p-mb-1">
           <h5>Patient Gender</h5>
           {{ messagePatientDetails.patientGender }}
+        </div>
+        <div class="p-mb-1">
+          <h5>Patient sender Name</h5>
+          {{ messagePatientDetails.senderName }}
+        </div>
+        <div class="p-mb-1">
+          <h5>Patient sender Phone Number</h5>
+          {{ messagePatientDetails.senderPhoneNumber }}
         </div>
       </div>
     </p-fieldset>

@@ -4,6 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MenuItem } from 'primeng/api';
+import { PatientDashboard } from '../../radiologist/shared/models/patient-dashboard.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,12 +14,7 @@ import { MenuItem } from 'primeng/api';
 export class DashboardComponent implements OnInit, OnDestroy {
   // userId;
   sub: Subscription;
-
-  showFlag: boolean = false;
-  selectedImageIndex: number = -1;
-
-  currentIndex: any = -1;
-
+  topFiveRad: PatientDashboard[] = [];
   constructor(private afs: AngularFirestore, private auth: AngularFireAuth) {}
   ngOnDestroy(): void {
     // this.sub.unsubscribe();
@@ -26,23 +22,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {}
 
-  imageObject: Array<any> = [
+  images: any[];
+
+  responsiveOptions: any[] = [
     {
-      image:
-        'https://firebasestorage.googleapis.com/v0/b/drradauthpay.appspot.com/o/uploads%2F7%2F2763.jpg?alt=media&token=77519235-3540-42b1-93a2-5a30167799aa',
-      thumbImage:
-        'https://firebasestorage.googleapis.com/v0/b/drradauthpay.appspot.com/o/uploads%2F7%2F2763.jpg?alt=media&token=77519235-3540-42b1-93a2-5a30167799aa',
-      title: 'Hummingbirds are amazing creatures',
+      breakpoint: '1024px',
+      numVisible: 5,
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 3,
+    },
+    {
+      breakpoint: '560px',
+      numVisible: 1,
     },
   ];
-
-  showLightbox(index) {
-    this.currentIndex = index;
-    this.showFlag = true;
-  }
-
-  closeEventHandler() {
-    this.showFlag = false;
-    this.currentIndex = -1;
-  }
 }

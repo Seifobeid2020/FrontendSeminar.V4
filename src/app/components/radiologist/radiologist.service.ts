@@ -9,6 +9,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { DoctorCityLabel } from './patient/patient-details/shared/doctor-city-label.model';
 import { MessagePatient } from '../dentist/shared/message-patient.model';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,8 @@ export class RadiologistService {
   constructor(
     private http: HttpClient,
     private afs: AngularFirestore,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private authService: AuthService
   ) {}
 
   async getAllDoctors() {
@@ -100,12 +102,13 @@ export class RadiologistService {
       console.log('user deatals: ', user);
       return user;
     });
+
     console.log(tretment);
 
     var message: MessagePatient = {
       senderId: userDetails.uid,
       receiverId: id,
-      receiverImage: tretment.treatmentImageUrl,
+      imageUrlAfterAI: null,
       imageType: tretment.treatmentName,
       imageUrl: tretment.treatmentImageUrl,
       treatmentId: tretment.treatmentTypeId,
@@ -116,7 +119,9 @@ export class RadiologistService {
       seen: false,
       sentAt: new Date(),
       savedInDB: false,
-      receiverName: userDetails.displayName,
+      senderName: userDetails.displayName,
+      senderImage: userDetails.photoURL,
+      senderPhoneNumber: userDetails.phoneNumber,
     };
 
     this.afs

@@ -10,8 +10,10 @@ export interface MessagePatient {
   seen?: boolean;
   sentAt: Date;
   savedInDB?: boolean;
-  receiverImage?: string;
-  receiverName?: string;
+  imageUrlAfterAI?: string;
+  senderName?: string;
   patientGender?: string;
   patientAge?: number;
+  senderImage?: string;
+  senderPhoneNumber?: string;
 }

@@ -37,6 +37,8 @@ import { AdvanceReportComponent } from './reports/advance-report/advance-report.
 //table dashboard
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartModule } from 'primeng/chart';
+import { ClickOutsideModule } from 'ng-click-outside';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { ChartModule } from 'primeng/chart';
     RadiologistComponent,
     AdvanceReportComponent,
     DashboardComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -81,6 +84,7 @@ import { ChartModule } from 'primeng/chart';
     ButtonModule,
     PanelMenuModule,
     SharedModule,
+    ClickOutsideModule,
   ],
   exports: [],
   providers: [MessageService, ConfirmationService],

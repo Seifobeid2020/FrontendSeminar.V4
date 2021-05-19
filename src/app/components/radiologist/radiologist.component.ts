@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import firebase from 'firebase';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../auth.service';
 
@@ -10,9 +12,14 @@ import { AuthService } from '../auth.service';
 export class RadiologistComponent implements OnInit {
   itemsNav: MenuItem[];
   itemsSideNav: MenuItem[];
+
+  userData: any;
+  showAccountSettings: boolean = false;
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
+    this.userData = this.authService.getUser();
+    console.log(this.userData);
     this.itemsSideNav = [
       {
         label: 'Dashboard',
@@ -64,5 +71,29 @@ export class RadiologistComponent implements OnInit {
 
   logout() {
     this.authService.SignOut();
+  }
+
+  onClickedOutside(event) {
+    var target = event.target || event.srcElement || event.currentTarget;
+    var idAttr = target.attributes.id;
+
+    if (idAttr != null) {
+      if (idAttr.value == 'accountSettings') {
+        return;
+      }
+    }
+
+    this.showAccountSettings = false;
+  }
+  onClickUserProfile() {
+    this.showAccountSettings = !this.showAccountSettings;
+  }
+  async onClickUserAccount() {
+    const functionRef = firebase
+      .app()
+      .functions('us-central1')
+      .httpsCallable('ext-firestore-stripe-subscriptions-createPortalLink');
+    const { data } = await functionRef({ returnUrl: window.location.origin });
+    window.location.assign(data.url);
   }
 }

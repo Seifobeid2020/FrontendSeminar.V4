@@ -21,7 +21,7 @@
 
       <!-- value="{{ messagesArray?.length }}" -->
       <div
-        class="dropdown-menu dropdown-menu-right animated fadeIn"
+        class="dropdown-menu"
         (clickOutside)="onClickedOutside($event)"
         *ngIf="showBox"
       >
@@ -36,31 +36,31 @@
               >
                 <div class="p-grid">
                   <div class="p-col-2">
-                    <a [href]="message.imageUrl">
-                      <img
-                        [src]="message.imageUrl"
-                        [alt]="message.imageType"
-                        style="
-                          height: 56px;
-                          width: 56px;
-                          border-radius: 50%;
-                          margin: 5px;
-                          padding: 5px;
-                        "
-                      />
-                    </a>
+                    <img
+                      [src]="
+                        message.senderImage
+                          ? message.senderImage
+                          : '/assets/images/default-user-image.png'
+                      "
+                      [alt]="message.senderName"
+                      style="
+                        height: 56px;
+                        width: 56px;
+                        border-radius: 50%;
+                        margin: 5px;
+                        padding: 5px;
+                      "
+                    />
                   </div>
                   <div class="p-col-9">
                     <span>
                       <b>
                         {{
-                          message.receiverName
-                            ? message.receiverName
-                            : "UnKnown"
+                          message.senderName ? message.senderName : "UnKnown"
                         }}</b
                       >
                     </span>
-                    Send to you New Patient
+                    Send to you a New Patient
                     <span
                       ><b> {{ message.patientName }}. </b>
                     </span>
@@ -93,23 +93,92 @@
           </div>
         </div>
       </div>
-      <button
-        type="button"
-        pButton
-        label="Logout"
-        icon="pi pi-sign-out"
-        (click)="logout()"
-      ></button>
+      <img
+        src="/assets/images/default-user-image.png"
+        alt="profile image"
+        (click)="onClickUserProfile()"
+        class="profile-image"
+        id="accountSettings"
+        [ngStyle]="{
+          border: showAccountSettings
+            ? '3px solid rgba(38, 38, 38, 0.898)'
+            : 'none'
+        }"
+      />
     </div>
   </ng-template>
 </p-menubar>
+<div
+  class="dropdown-menu-profile-account"
+  (clickOutside)="onClickedOutsideProfile($event)"
+  *ngIf="showAccountSettings"
+>
+  <div
+    class="user-details"
+    (click)="onClickUserProfile()"
+    [routerLink]="['./profile']"
+  >
+    <div class="p-grid">
+      <div class="p-col-3">
+        <img
+          [src]="
+            userData.imageUrl
+              ? userData.imageUrl
+              : '/assets/images/default-user-image.png'
+          "
+          [alt]="userData.displayName"
+          class="avatar"
+        />
+      </div>
+      <div class="p-col-9 media-body">
+        <span>
+          <b> {{ userData.displayName }}</b>
+        </span>
+        <br />
+        <span> {{ userData.email }}</span>
+      </div>
+    </div>
+  </div>
 
-<div class="sidenav">
+  <div class="line-divider"></div>
+  <div class="list-settings">
+    <div
+      class="dropdown-item"
+      (click)="onClickUserProfile()"
+      [routerLink]="['./profile']"
+    >
+      <i class="pi pi-user icon-item"></i> Profile
+    </div>
+    <div class="dropdown-item" (click)="onClickUserAccount()">
+      <i class="pi pi-credit-card icon-item"></i> Account
+    </div>
+    <!-- change this  Setting -->
+    <div class="dropdown-item" (click)="onClickUserProfile()">
+      <i class="pi pi-cog icon-item"></i> Setting
+    </div>
+    <div class="dropdown-item" (click)="logout()">
+      <i class="pi pi-power-off icon-item"></i> Logout
+    </div>
+  </div>
+</div>
+
+<!-- <div class="sidenav">
   <p-panelMenu
     [model]="itemsSideNav"
     [style]="{ width: '100%', height: '100%' }"
   ></p-panelMenu>
+</div> -->
+
+<div class="sidenav-wrapper">
+  <div class="logo-wrapper">
+    <img class="logo-image" src="/assets/logo1.png" alt="not found" />
+  </div>
+
+  <div class="sidenav">
+    <p-panelMenu [model]="itemsSideNav"></p-panelMenu>
+  </div>
 </div>
+
 <!--
 <div class="main">
   <div class="p-shadow-5 container">

@@ -11,7 +11,7 @@ import { DentistRoutingModule } from './dentist-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BadgeModule } from 'primeng/badge';
 import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
-
+import { GalleriaModule } from 'primeng/galleria';
 import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
@@ -28,6 +28,7 @@ import { ClickOutsideModule } from 'ng-click-outside';
     BadgeModule,
     ClickOutsideModule,
     NgImageFullscreenViewModule,
+    GalleriaModule,
   ],
 
   providers: [MessagePatientService],
