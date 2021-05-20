@@ -6,6 +6,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { MenuItem } from 'primeng/api';
 import { PatientDashboard } from '../../radiologist/shared/models/patient-dashboard.model';
 
+interface radiologistViewModel {
+  name;
+  phoneNumber;
+  totalPatients;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -14,13 +20,31 @@ import { PatientDashboard } from '../../radiologist/shared/models/patient-dashbo
 export class DashboardComponent implements OnInit, OnDestroy {
   // userId;
   sub: Subscription;
-  topFiveRad: PatientDashboard[] = [];
+  topFiveRad: radiologistViewModel[] = [];
+  totalPatients;
+  totalRadiologists;
   constructor(private afs: AngularFirestore, private auth: AngularFireAuth) {}
   ngOnDestroy(): void {
     // this.sub.unsubscribe();
   }
 
-  async ngOnInit() {}
+  ngOnInit() {
+    this.images = [
+      {
+        previewImageSrc: '/assets/images/Ad1.png',
+        thumbnailImageSrc: '/assets/images/Ad1.png',
+        alt: 'Description for Image 1',
+        title: 'Title 1',
+      },
+
+      {
+        previewImageSrc: '/assets/images/Ad3.png',
+        thumbnailImageSrc: '/assets/images/Ad3.png',
+        alt: 'Description for Image 3',
+        title: 'Title 1',
+      },
+    ];
+  }
 
   images: any[];
 

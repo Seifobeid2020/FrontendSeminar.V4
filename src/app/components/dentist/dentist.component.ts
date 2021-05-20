@@ -48,7 +48,6 @@ export class DentistComponent implements OnInit, OnDestroy {
         label: 'Patients',
         icon: 'pi pi-fw pi-user',
         routerLink: ['/dentist/patients'],
-        routerLinkActiveOptions: { exact: true },
       },
     ];
     this.messagesArray = [];

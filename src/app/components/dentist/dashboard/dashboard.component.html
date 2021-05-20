@@ -1,47 +1,101 @@
-<p-galleria
-  [(value)]="images"
-  [responsiveOptions]="responsiveOptions"
-  [containerStyle]="{ 'max-width': '640px' }"
-  [numVisible]="5"
-  [circular]="true"
-  [autoPlay]="true"
-  [transitionInterval]="2000"
->
-  <ng-template pTemplate="item" let-item>
-    <img [src]="item.previewImageSrc" style="width: 100%; display: block" />
-  </ng-template>
-  <ng-template pTemplate="thumbnail" let-item>
-    <div class="p-grid p-nogutter p-justify-center">
-      <img [src]="item.thumbnailImageSrc" style="display: block" />
-    </div>
-  </ng-template>
-</p-galleria>
-<!-- <div class="p-grid mt-4">
-  <div class="p-col-12 p-lg-12 p-xl-12">
+<div class="dashboard-container">
+  <div class="image-container">
+    <p-galleria
+      [(value)]="images"
+      [responsiveOptions]="responsiveOptions"
+      [containerStyle]="{ 'max-width': 'auto', 'max-hight': '280px' }"
+      [numVisible]="2"
+      [circular]="true"
+      [autoPlay]="true"
+      [showThumbnails]="false"
+      [showIndicators]="true"
+      [transitionInterval]="3500"
+    >
+      <ng-template pTemplate="item" let-item>
+        <img
+          [src]="item.previewImageSrc"
+          style="height: 240px; width: auto; max-width: 100%; display: block"
+        />
+      </ng-template>
+
+      <ng-template pTemplate="thumbnail" let-item>
+        <div class="p-grid p-nogutter p-justify-center">
+          <img [src]="item.thumbnailImageSrc" style="display: block" />
+        </div>
+      </ng-template>
+    </p-galleria>
+  </div>
+</div>
+
+<div class="p-grid">
+  <div class="p-col-12 p-lg-5 p-xl-6">
     <div class="card">
-      <div class="card-header">Last 5 Patients</div>
+      <div class="card-header">Top 5 Radiologists</div>
       <div class="card-body">
         <p-table [value]="topFiveRad">
           <ng-template pTemplate="header">
             <tr>
               <th>Name</th>
-              <th>Age</th>
-              <th>Gender</th>
               <th>Phone Number</th>
-              <th>Visit Date</th>
+              <th>Total Patients</th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-patient>
+          <ng-template pTemplate="body" let-radiologist>
             <tr>
-              <td>{{ patient.fullName }}</td>
-              <td>{{ patient.age }}</td>
-              <td>{{ patient.gender == 1 ? "Male" : "Female" }}</td>
-              <td>{{ patient.phoneNumber }}</td>
-              <td>{{ patient.createdAt | date: "yyyy-MM-dd" }}</td>
+              <td>{{ radiologist.name }}</td>
+
+              <td>{{ radiologist.phoneNumber }}</td>
             </tr>
           </ng-template>
         </p-table>
       </div>
     </div>
   </div>
-</div> -->
+  <div class="p-col-12 p-lg-7 p-xl-6">
+    <div class="card">
+      <div class="p-grid mt-4">
+        <!-- 11111 -->
+        <div class="p-col-12 p-sm-12 p-lg-12 p-xl-6">
+          <div class="card gradient-scooter">
+            <div class="card-body p-p-4">
+              <div class="media">
+                <div class="media-body text-left">
+                  <span class="text-white" style="font-size: 1.7rem">{{
+                    totalPatients ? totalPatients : 0
+                  }}</span>
+                  <br />
+                  <span class="text-white">Total Patients</span>
+                </div>
+                <div class="align-self-center w-icon">
+                  <i
+                    class="pi pi-users text-white"
+                    style="font-size: 1.7rem; padding-right: 1.5rem"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 222222 -->
+        <div class="p-col-12 p-sm-12 p-lg-12 p-xl-6">
+          <div class="card gradient-bloody">
+            <div class="card-body p-p-4">
+              <div class="media">
+                <div class="media-body text-left">
+                  <span class="text-white" style="font-size: 1.7rem">{{
+                    totalRadiologists ? totalRadiologists : 0
+                  }}</span>
+                  <br />
+                  <span class="text-white">Total Radiologists</span>
+                </div>
+                <div class="align-self-center w-icon">
+                  <i class="pi pi-users text-white" style="font-size: 2rem"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

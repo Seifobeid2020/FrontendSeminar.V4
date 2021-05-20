@@ -116,7 +116,7 @@
   <div
     class="user-details"
     (click)="onClickUserProfile()"
-    [routerLink]="['./profile']"
+    [routerLink]="['/dentist/profile']"
   >
     <div class="p-grid">
       <div class="p-col-3">
@@ -145,17 +145,14 @@
     <div
       class="dropdown-item"
       (click)="onClickUserProfile()"
-      [routerLink]="['./profile']"
+      [routerLink]="['/dentist/profile']"
     >
       <i class="pi pi-user icon-item"></i> Profile
     </div>
     <div class="dropdown-item" (click)="onClickUserAccount()">
       <i class="pi pi-credit-card icon-item"></i> Account
     </div>
-    <!-- change this  Setting -->
-    <div class="dropdown-item" (click)="onClickUserProfile()">
-      <i class="pi pi-cog icon-item"></i> Setting
-    </div>
+
     <div class="dropdown-item" (click)="logout()">
       <i class="pi pi-power-off icon-item"></i> Logout
     </div>

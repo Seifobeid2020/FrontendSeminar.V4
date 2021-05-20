@@ -33,6 +33,10 @@ import { MessagePatientTableComponent } from './message-patient-table/message-pa
 import { MessagePatientDetailsComponent } from './message-patient-details/message-patient-details.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
+import {
+  FontAwesomeModule,
+  FaIconLibrary,
+} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -67,6 +71,7 @@ import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
     ProgressSpinnerModule,
     FieldsetModule,
     NgImageFullscreenViewModule,
+    FontAwesomeModule,
   ],
 
   providers: [MessageService, ConfirmationService],

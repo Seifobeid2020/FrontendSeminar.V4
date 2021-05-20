@@ -6,6 +6,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessagePatientService } from './../message-patient.service';
 import { MessagePatient } from './../../shared/message-patient.model';
 import { HttpClient } from '@angular/common/http';
+import { faRobot } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-patient-details',
   templateUrl: './message-patient-details.component.html',
@@ -19,7 +21,7 @@ export class MessagePatientDetailsComponent implements OnInit, OnDestroy {
     private confirmationService: ConfirmationService,
     private http: HttpClient
   ) {}
-
+  faRobot = faRobot;
   sub: Subscription;
 
   id: number;

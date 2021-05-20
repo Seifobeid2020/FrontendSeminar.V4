@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DentistComponent } from './dentist.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
           import('./message-patient/message-patient.module').then(
             (m) => m.PatientModule
           ),
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
       },
     ],
   },

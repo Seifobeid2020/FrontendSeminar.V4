@@ -13,9 +13,15 @@ import { BadgeModule } from 'primeng/badge';
 import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
 import { GalleriaModule } from 'primeng/galleria';
 import { ClickOutsideModule } from 'ng-click-outside';
-
+import { TableModule } from 'primeng/table';
+import { ProfileComponent } from './profile/profile.component';
+import { ToastModule } from 'primeng/toast';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 @NgModule({
-  declarations: [DentistComponent, DashboardComponent],
+  declarations: [DentistComponent, DashboardComponent, ProfileComponent],
   imports: [
     DentistRoutingModule,
     CommonModule,
@@ -29,8 +35,13 @@ import { ClickOutsideModule } from 'ng-click-outside';
     ClickOutsideModule,
     NgImageFullscreenViewModule,
     GalleriaModule,
+    TableModule,
+    ToastModule,
+    FormsModule,
+    DialogModule,
+    ConfirmDialogModule,
   ],
 
-  providers: [MessagePatientService],
+  providers: [MessagePatientService, MessageService, ConfirmationService],
 })
 export class DentistModule {}

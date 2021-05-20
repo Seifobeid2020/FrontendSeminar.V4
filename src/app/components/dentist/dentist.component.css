@@ -258,7 +258,7 @@
   align-items: center;
   padding-bottom: 9px;
   padding-top: 10px;
-  border-bottom: 2px solid #9e0000;
+  border-bottom: 2px solid rgb(0, 235, 177);
   /* box-shadow: inset 0px 1px 5px lightgray; */
 }
 
@@ -283,12 +283,12 @@
 /* ng deep*/
 ::ng-deep.p-menubar {
   width: 100% !important;
-  background: rgb(190, 57, 27);
+  background: rgb(0, 235, 177);
   background: linear-gradient(
-    48deg,
-    rgba(190, 57, 27, 0.8323704481792717) 4%,
-    rgba(197, 55, 204, 0.8239670868347339) 41%,
-    rgba(118, 12, 255, 0.8211659663865546) 100%
+    47deg,
+    rgba(0, 235, 177, 0.9920343137254902) 0%,
+    rgba(102, 247, 211, 0.9192051820728291) 46%,
+    rgba(98, 202, 252, 1) 100%
   );
   margin: 0;
   border: none !important;
@@ -335,7 +335,7 @@
   box-shadow: none !important;
   color: #fff !important;
   background: rgba(255, 255, 255, 0.14) !important;
-  border-left-color: #f63740 !important;
+  border-left-color: rgb(0, 235, 177) !important;
 }
 
 ::ng-deep.p-toggleable-content {
@@ -357,5 +357,5 @@
   margin-top: 0.5em;
 }
 ::ng-deep .p-badge.p-badge-danger {
-  background-color: #ff0000;
+  background-color: rgb(0, 235, 177);
 }
